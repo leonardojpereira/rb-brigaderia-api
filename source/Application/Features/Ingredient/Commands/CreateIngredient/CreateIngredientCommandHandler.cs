@@ -13,7 +13,7 @@ public class CreateIngredientCommandHandler : IRequestHandler<CreateIngredientCo
 
     public CreateIngredientCommandHandler(IUnitOfWork unitOfWork, IMediator mediator, IIngredientRepository ingredientRepository)
     {
-        _unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;   
         _mediator = mediator;
         _ingredientRepository = ingredientRepository;
     }

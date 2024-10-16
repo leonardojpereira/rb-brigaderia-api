@@ -8,5 +8,7 @@ public interface IApplicationDbContext
     public DbSet<Role> Role { get; set; }
     public DbSet<Ingredient> Ingredient { get; set; }
 
+    public DbSet<StockMovement> StockMovement { get; set; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

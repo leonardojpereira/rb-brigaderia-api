@@ -10,6 +10,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<User> User { get; set; }
     public DbSet<Role> Role { get; set; }
     public DbSet<Ingredient> Ingredient { get; set; }
+    public DbSet<StockMovement> StockMovement { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -20,4 +21,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         return base.SaveChanges();
     }
+
+    public async Task<int> CommitAsync(CancellationToken cancellationToken)
+{
+    return await base.SaveChangesAsync(cancellationToken);
+}
+
 }

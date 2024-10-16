@@ -7,4 +7,6 @@ public class Ingredient : BaseEntity
     public decimal Stock { get; set; }
     public decimal MinimumStock { get; set; }
     public decimal UnitPrice { get; set; }
+
+    public ICollection<StockMovement> StockMovements { get; set; } = new List<StockMovement>();
 }
