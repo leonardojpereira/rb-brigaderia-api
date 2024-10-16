@@ -2,15 +2,25 @@ using Microsoft.AspNetCore.Mvc;
 using Project.Domain.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Project.Application.Features.Commands.UpdateStockMovement;
+using Project.Application.Features.Queries.GetAllStockMovement;
+using MediatR;
 
 namespace Project.WebApi.Controllers
 {
-    public class StockMovementController(INotificationHandler<DomainNotification> notifications,
-                          INotificationHandler<DomainSuccessNotification> successNotifications,
-                          IMediator mediatorHandler) : BaseController(notifications, successNotifications, mediatorHandler)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class StockMovementController : BaseController
     {
-        private readonly IMediator _mediatorHandler = mediatorHandler;
+        private readonly IMediator _mediatorHandler;
 
+        public StockMovementController(INotificationHandler<DomainNotification> notifications,
+                                       INotificationHandler<DomainSuccessNotification> successNotifications,
+                                       IMediator mediatorHandler) : base(notifications, successNotifications, mediatorHandler)
+        {
+            _mediatorHandler = mediatorHandler;
+        }
+
+        // Endpoint para atualizar movimentação de estoque
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [ProducesResponseType(typeof(UpdateStockMovementCommandResponse), StatusCodes.Status200OK)]
@@ -19,15 +29,15 @@ namespace Project.WebApi.Controllers
             return Response(await _mediatorHandler.Send(new UpdateStockMovementCommand(request)));
         }
 
-        // Você pode descomentar essa parte se precisar da funcionalidade de obter todas as movimentações
-        /*
+        // Endpoint para obter todas as movimentações de estoque
         [Authorize(Roles = "Admin, User")]
         [HttpGet]
-        [ProducesResponseType(typeof(GetAllStockMovementsQueryResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllStockMovements()
+        [ProducesResponseType(typeof(GetAllStockMovementQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllStockMovements([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            return Response(await _mediatorHandler.Send(new GetAllStockMovementsQuery()));
+            var query = new GetAllStockMovementQuery(pageNumber, pageSize);
+            return Response(await _mediatorHandler.Send(query));
         }
-        */
+
     }
 }
