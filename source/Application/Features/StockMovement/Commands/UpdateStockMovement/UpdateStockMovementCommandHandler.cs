@@ -34,7 +34,6 @@ public class UpdateStockMovementCommandHandler : IRequestHandler<UpdateStockMove
         return null;
     }
 
-    // Ajustar o estoque com base no tipo de movimentação
     if (request.Request.MovementType == "entrada")
     {
         dbIngredient.Stock += request.Request.Quantity;
@@ -54,10 +53,9 @@ public class UpdateStockMovementCommandHandler : IRequestHandler<UpdateStockMove
         return null;
     }
 
-    // Criar a nova movimentação de estoque
     var newStockMovement = new StockMovement
     {
-        Id = Guid.NewGuid(), // Gerar um novo ID para a movimentação
+        Id = Guid.NewGuid(), 
         IngredientId = dbIngredient.Id,
         Quantity = request.Request.Quantity,
         Description = request.Request.Description,
@@ -65,24 +63,20 @@ public class UpdateStockMovementCommandHandler : IRequestHandler<UpdateStockMove
         CreatedAt = DateTime.UtcNow
     };
 
-    // Salvar a nova movimentação no banco
     await _stockMovementRepository.AddAsync(newStockMovement);
 
-    // Atualizar o ingrediente
     _ingredientRepository.Update(dbIngredient);
 
-    // Commitar as alterações
     _unitOfWork.Commit();
 
     await _mediator.Publish(new DomainSuccessNotification("UpdateStockMovement", "Stock updated successfully"), cancellationToken);
 
-    // Retornar os dados da movimentação
     var response = new UpdateStockMovementCommandResponse
     {
-        Id = newStockMovement.Id, // Retornar o ID da nova movimentação
+        Id = newStockMovement.Id, 
         IngredientId = dbIngredient.Id,
         Quantity = request.Request.Quantity,
-        Description = request.Request.Description, // Incluir a descrição
+        Description = request.Request.Description, 
         MovementType = request.Request.MovementType
     };
 

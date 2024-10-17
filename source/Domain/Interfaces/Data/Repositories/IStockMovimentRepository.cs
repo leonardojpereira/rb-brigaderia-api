@@ -10,7 +10,6 @@ namespace Project.Domain.Interfaces.Data.Repositories
         Task<StockMovement?> GetAsync(Expression<Func<StockMovement, bool>> predicate);
         Task AddAsync(StockMovement stockMovement);
 
-        //GetAllAsync
-        Task<IEnumerable<StockMovement>> GetAllAsync(); // Método para obter todas as movimentações
+        Task<IEnumerable<StockMovement>> GetAllAsync();
     }
 }

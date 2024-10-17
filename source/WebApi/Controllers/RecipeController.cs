@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Application.Features.Commands.CreateRecipe;
+using Project.Application.Features.Commands.UpdateRecipe;
 using Project.Domain.Notifications;
 
 namespace Project.WebApi.Controllers
@@ -17,6 +18,15 @@ namespace Project.WebApi.Controllers
         public async Task<IActionResult> Create([FromBody] CreateRecipeCommandRequest request)
         {
             var result = await _mediatorHandler.Send(new CreateRecipeCommand(request));
+            return Response(result);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(UpdateRecipeCommandResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update([FromBody] UpdateRecipeCommandRequest request, [FromRoute] Guid id)
+        {
+            var result = await _mediatorHandler.Send(new UpdateRecipeCommand(request, id));
             return Response(result);
         }
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Project.Infrastructure.Data;
 namespace Project.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241017124637_AddRecipeTable")]
+    partial class AddRecipeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,25 +93,6 @@ namespace Project.Infrastructure.Data.Migrations
                     b.ToTable("T_RECIPE", (string)null);
                 });
 
-            modelBuilder.Entity("Project.Domain.Entities.RecipeIngredient", b =>
-                {
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IngredienteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("QuantidadeNecessaria")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NR_QUANTIDADE_NECESSARIA");
-
-                    b.HasKey("RecipeId", "IngredienteId");
-
-                    b.HasIndex("IngredienteId");
-
-                    b.ToTable("T_RECIPE_INGREDIENTES", (string)null);
-                });
-
             modelBuilder.Entity("Project.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -141,14 +125,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2338),
+                            CreatedAt = new DateTime(2024, 10, 17, 12, 46, 36, 570, DateTimeKind.Utc).AddTicks(764),
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2342),
+                            CreatedAt = new DateTime(2024, 10, 17, 12, 46, 36, 570, DateTimeKind.Utc).AddTicks(775),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -242,45 +226,56 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b8a0d1e6-f8a4-44bb-82bc-8342cceba977"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2519),
+                            Id = new Guid("300721dd-d467-4194-8dd8-b24e857d3ea2"),
+                            CreatedAt = new DateTime(2024, 10, 17, 12, 46, 36, 570, DateTimeKind.Utc).AddTicks(1518),
                             Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$j2EXuNjE2IBvkRe62ap9Vuflu1Z1tHCCr.Ts8umKZQ0FPHMIi1PXe",
+                            HashedPassword = "$2a$11$vujEHlngdNHnOcTJpCrWPeZLvDvCVykZpCJtnb7ZM0c5S.Jv.kWEi",
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
                             Username = "admin"
                         },
                         new
                         {
-                            Id = new Guid("1b5e90a4-4901-4f26-a2fe-7ec1db2da30e"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 536, DateTimeKind.Utc).AddTicks(4257),
+                            Id = new Guid("182b7374-90d2-48b2-a75d-37708a48cad0"),
+                            CreatedAt = new DateTime(2024, 10, 17, 12, 46, 36, 854, DateTimeKind.Utc).AddTicks(6890),
                             Email = "user@user.com",
-                            HashedPassword = "$2a$11$sEmG6fB3K089tN2h6g0NTO456d9EsIHrcC1km/SdGsZVyXeoV5pS.",
+                            HashedPassword = "$2a$11$4onuRuGZ62IBZqyjZ.aB9OtAlclMc4Hx4QMiZxyH5ndziirua9Yie",
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
                             Username = "user"
                         });
                 });
 
-            modelBuilder.Entity("Project.Domain.Entities.RecipeIngredient", b =>
+            modelBuilder.Entity("Project.Domain.Entities.Recipe", b =>
                 {
-                    b.HasOne("Project.Domain.Entities.Ingredient", "Ingredient")
-                        .WithMany()
-                        .HasForeignKey("IngredienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_RECIPE_INGREDIENTES_INGREDIENT");
+                    b.OwnsMany("Project.Domain.Entities.Recipe+IngredienteQuantidade", "Ingredientes", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
 
-                    b.HasOne("Project.Domain.Entities.Recipe", "Recipe")
-                        .WithMany("Ingredientes")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_RECIPE_INGREDIENTES_RECIPE");
+                            b1.Property<Guid>("IngredienteId")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("FK_ID_INGREDIENTE");
 
-                    b.Navigation("Ingredient");
+                            b1.Property<decimal>("QuantidadeNecessaria")
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("NR_QUANTIDADE_NECESSARIA");
 
-                    b.Navigation("Recipe");
+                            b1.Property<Guid>("RecipeId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("RecipeId");
+
+                            b1.ToTable("T_RECIPE_INGREDIENTES", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("RecipeId");
+                        });
+
+                    b.Navigation("Ingredientes");
                 });
 
             modelBuilder.Entity("Project.Domain.Entities.StockMovement", b =>
@@ -309,11 +304,6 @@ namespace Project.Infrastructure.Data.Migrations
             modelBuilder.Entity("Project.Domain.Entities.Ingredient", b =>
                 {
                     b.Navigation("StockMovements");
-                });
-
-            modelBuilder.Entity("Project.Domain.Entities.Recipe", b =>
-                {
-                    b.Navigation("Ingredientes");
                 });
 
             modelBuilder.Entity("Project.Domain.Entities.Role", b =>
