@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Application.Features.Commands.CreateRecipe;
 using Project.Application.Features.Commands.UpdateRecipe;
+using Project.Application.Features.Queries.GetAllRecipe;
 using Project.Domain.Notifications;
 
 namespace Project.WebApi.Controllers
@@ -27,6 +28,16 @@ namespace Project.WebApi.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateRecipeCommandRequest request, [FromRoute] Guid id)
         {
             var result = await _mediatorHandler.Send(new UpdateRecipeCommand(request, id));
+            return Response(result);
+        }
+
+        // Endpoint para obter todas as receitas
+        [Authorize(Roles = "Admin, User")]
+        [HttpGet]
+        [ProducesResponseType(typeof(GetAllRecipeQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllRecipes()
+        {
+            var result = await _mediatorHandler.Send(new GetAllRecipeQuery());
             return Response(result);
         }
     }

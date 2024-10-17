@@ -29,5 +29,12 @@ namespace Project.Infrastructure.Data.Respositories
         {
             return await _dbContext.Recipe.ToListAsync();
         }
+
+        public override IEnumerable<Recipe> GetAll()
+        {
+            return _dbContext.Recipe
+                .Include(r => r.Ingredientes)
+                .ToList();
+        }
     }
 }
