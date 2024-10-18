@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Application.Features.Commands.CreateProduction;
+using Project.Application.Features.Commands.UpdateProduction;
 using Project.Application.Features.Queries.GetAllProduction;
 using Project.Application.Features.Queries.GetAllRecipe;
 using Project.Domain.Notifications;
@@ -29,6 +30,13 @@ namespace Project.WebApi.Controllers
             var result = await _mediatorHandler.Send(new GetAllProductionQuery());
             return Response(result);
         }
-
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(UpdateProductionCommandResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateProductionCommandRequest request)
+        {
+            var result = await _mediatorHandler.Send(new UpdateProductionCommand(request, id));
+            return Response(result);
+        }
     }
 }
