@@ -10,5 +10,9 @@ public interface IApplicationDbContext
 
     public DbSet<StockMovement> StockMovement { get; set; }
 
+    public DbSet<Recipe> Recipe { get; set; }
+
+     public DbSet<RecipeIngredient> RecipeIngredient { get; set; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

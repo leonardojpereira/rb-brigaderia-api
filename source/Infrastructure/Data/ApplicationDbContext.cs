@@ -12,6 +12,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Ingredient> Ingredient { get; set; }
     public DbSet<StockMovement> StockMovement { get; set; }
 
+    public DbSet<Recipe> Recipe { get; set; }
+
+    public DbSet<RecipeIngredient> RecipeIngredient { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -23,8 +27,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     }
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken)
-{
-    return await base.SaveChangesAsync(cancellationToken);
-}
+    {
+        return await base.SaveChangesAsync(cancellationToken);
+    }
 
 }
