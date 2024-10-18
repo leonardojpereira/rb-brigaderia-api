@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Application.Features.Commands.CreateProduction;
+using Project.Application.Features.Commands.DeleteProduction;
 using Project.Application.Features.Commands.UpdateProduction;
 using Project.Application.Features.Queries.GetAllProduction;
 using Project.Application.Features.Queries.GetAllRecipe;
+using Project.Application.Features.Queries.GetProductionById;
 using Project.Domain.Notifications;
 
 namespace Project.WebApi.Controllers
@@ -38,5 +40,22 @@ namespace Project.WebApi.Controllers
             var result = await _mediatorHandler.Send(new UpdateProductionCommand(request, id));
             return Response(result);
         }
+        [Authorize(Roles = "Admin, User")]
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(GetProductionByIdQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var result = await _mediatorHandler.Send(new GetProductionByIdQuery(id));
+            return Response(result);
+        }
+        [Authorize(Roles = "Admin, User")]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(DeleteProductionCommandResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var result = await _mediatorHandler.Send(new DeleteProductionCommand(id));
+            return Response(result);
+        }
+
     }
 }
