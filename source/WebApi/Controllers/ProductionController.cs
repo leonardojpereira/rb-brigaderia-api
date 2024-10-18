@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Application.Features.Commands.CreateProduction;
+using Project.Application.Features.Queries.GetAllProduction;
+using Project.Application.Features.Queries.GetAllRecipe;
 using Project.Domain.Notifications;
 
 namespace Project.WebApi.Controllers
@@ -17,6 +19,14 @@ namespace Project.WebApi.Controllers
         public async Task<IActionResult> Create([FromBody] CreateProductionCommandRequest request)
         {
             var result = await _mediatorHandler.Send(new CreateProductionCommand(request));
+            return Response(result);
+        }
+        [Authorize(Roles = "Admin, User")]
+        [HttpGet]
+        [ProducesResponseType(typeof(GetAllRecipeQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllProductions()
+        {
+            var result = await _mediatorHandler.Send(new GetAllProductionQuery());
             return Response(result);
         }
 
