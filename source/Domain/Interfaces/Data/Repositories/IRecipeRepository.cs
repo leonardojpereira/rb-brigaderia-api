@@ -10,5 +10,7 @@ namespace Project.Domain.Interfaces.Data.Repositories
         Task AddAsync(Recipe Recipe);
 
         Task<IEnumerable<Recipe>> GetAllAsync();
+
+        Task<Recipe?> GetWithIngredientsAsync(Guid recipeId);
     }
 }

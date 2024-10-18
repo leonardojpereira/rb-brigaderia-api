@@ -66,6 +66,7 @@ public class UpdateRecipeCommandHandler : IRequestHandler<UpdateRecipeCommand, U
             await _recipeIngredientRepository.AddAsync(recipeIngredient);
         }
 
+        _recipeRepository.Update(dbRecipe);
         _unitOfWork.Commit();
 
         await _mediator.Publish(new DomainSuccessNotification("UpdateRecipe", "Recipe updated successfully"), cancellationToken);
