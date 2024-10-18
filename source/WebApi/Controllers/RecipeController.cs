@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Application.Features.Commands.CreateRecipe;
+using Project.Application.Features.Commands.DeleteRecipe;
 using Project.Application.Features.Commands.UpdateRecipe;
 using Project.Application.Features.Queries.GetAllRecipe;
 using Project.Application.Features.Queries.GetRecipeById;
@@ -49,6 +50,15 @@ namespace Project.WebApi.Controllers
             var result = await _mediatorHandler.Send(new GetRecipeByIdQuery(id));
             return Response(result);
 
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(DeleteRecipeCommandResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var result = await _mediatorHandler.Send(new DeleteRecipeCommand(id));
+            return Response(result);
         }
     }
 }
