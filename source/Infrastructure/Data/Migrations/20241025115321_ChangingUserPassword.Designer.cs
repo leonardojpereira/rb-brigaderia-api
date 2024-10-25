@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Project.Infrastructure.Data;
 namespace Project.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241025115321_ChangingUserPassword")]
+    partial class ChangingUserPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,6 +69,41 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("T_INGREDIENT", (string)null);
+                });
+
+            modelBuilder.Entity("Project.Domain.Entities.Production", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("PK_ID_PRODUCTION");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataProducao")
+                        .HasColumnType("datetime")
+                        .HasColumnName("DT_PRODUCAO");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuantidadeProduzida")
+                        .HasColumnType("int")
+                        .HasColumnName("NR_QUANTIDADE_PRODUZIDA");
+
+                    b.Property<Guid>("ReceitaId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("FK_ID_RECEITA");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceitaId");
+
+                    b.ToTable("T_PRODUCTION", (string)null);
                 });
 
             modelBuilder.Entity("Project.Domain.Entities.Recipe", b =>
@@ -141,22 +179,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-<<<<<<< Updated upstream
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2338),
-=======
                             CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2516),
->>>>>>> Stashed changes
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-<<<<<<< Updated upstream
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2342),
-=======
                             CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2520),
->>>>>>> Stashed changes
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -250,38 +280,35 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< Updated upstream
-                            Id = new Guid("b8a0d1e6-f8a4-44bb-82bc-8342cceba977"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2519),
-                            Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$j2EXuNjE2IBvkRe62ap9Vuflu1Z1tHCCr.Ts8umKZQ0FPHMIi1PXe",
-=======
                             Id = new Guid("f4d74cff-e86e-452e-99d7-8cc8475d76c5"),
                             CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2768),
                             Email = "admin@admin.com",
                             HashedPassword = "$2a$11$7433LszZM2zhoNrV14Ewb.nkRxslplB8htiR9GoRe.acQWmddqp76",
->>>>>>> Stashed changes
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
                             Username = "admin"
                         },
                         new
                         {
-<<<<<<< Updated upstream
-                            Id = new Guid("1b5e90a4-4901-4f26-a2fe-7ec1db2da30e"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 536, DateTimeKind.Utc).AddTicks(4257),
-                            Email = "user@user.com",
-                            HashedPassword = "$2a$11$sEmG6fB3K089tN2h6g0NTO456d9EsIHrcC1km/SdGsZVyXeoV5pS.",
-=======
                             Id = new Guid("3b5b0d33-2813-4614-8957-d28862749958"),
                             CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 424, DateTimeKind.Utc).AddTicks(1533),
                             Email = "user@user.com",
                             HashedPassword = "$2a$11$FMjilaJWIkMx8T4/nkFtceYwc5r2eW.ZUzKsFTHWNyGGpU9dLQ5Im",
->>>>>>> Stashed changes
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
                             Username = "user"
                         });
+                });
+
+            modelBuilder.Entity("Project.Domain.Entities.Production", b =>
+                {
+                    b.HasOne("Project.Domain.Entities.Recipe", "Receita")
+                        .WithMany()
+                        .HasForeignKey("ReceitaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Receita");
                 });
 
             modelBuilder.Entity("Project.Domain.Entities.RecipeIngredient", b =>

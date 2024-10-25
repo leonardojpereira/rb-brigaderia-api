@@ -13,14 +13,14 @@ internal class UserSeed : IEntityTypeConfiguration<User>
             new User
             (
                 username: "admin",
-                password: "123-!@#-123-!@#",
+                password: "admin123",
                 email: "admin@admin.com",
                 roleId: RoleConstants.Admin
             ),
             new User
             (
                 username: "user",
-                password: "123-!@#-123-!@#",
+                password: "admin123",
                 email: "user@user.com",
                 roleId: RoleConstants.User
             )
