@@ -17,7 +17,12 @@ namespace Project.Application.Features.Queries.GetAllIngredients
 
         public async Task<GetAllIngredientsQueryResponse?> Handle(GetAllIngredientsQuery request, CancellationToken cancellationToken)
         {
-            var dbIngredients = _ingredientRepository.GetAll();
+            var totalIngredients = _ingredientRepository.GetAll().Count();
+
+            var dbIngredients = _ingredientRepository.GetAll()
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToList();
 
             var ingredientDTOs = dbIngredients
                 .Select(dbIngredient => new GetAllIngredientsIngredientDTO
@@ -32,7 +37,14 @@ namespace Project.Application.Features.Queries.GetAllIngredients
                 .ToList();
 
             await _mediator.Publish(new DomainSuccessNotification("GetAllIngredients", "Ingredients retrieved successfully"), cancellationToken);
-            return new GetAllIngredientsQueryResponse { Ingredients = ingredientDTOs };
+
+            return new GetAllIngredientsQueryResponse 
+            { 
+                Ingredients = ingredientDTOs,
+                TotalItems = totalIngredients,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
         }
     }
-}
+    }

@@ -141,22 +141,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-<<<<<<< Updated upstream
                             CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2338),
-=======
-                            CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2516),
->>>>>>> Stashed changes
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-<<<<<<< Updated upstream
                             CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2342),
-=======
-                            CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2520),
->>>>>>> Stashed changes
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -250,34 +242,20 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< Updated upstream
                             Id = new Guid("b8a0d1e6-f8a4-44bb-82bc-8342cceba977"),
                             CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2519),
                             Email = "admin@admin.com",
                             HashedPassword = "$2a$11$j2EXuNjE2IBvkRe62ap9Vuflu1Z1tHCCr.Ts8umKZQ0FPHMIi1PXe",
-=======
-                            Id = new Guid("f4d74cff-e86e-452e-99d7-8cc8475d76c5"),
-                            CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2768),
-                            Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$7433LszZM2zhoNrV14Ewb.nkRxslplB8htiR9GoRe.acQWmddqp76",
->>>>>>> Stashed changes
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
                             Username = "admin"
                         },
                         new
                         {
-<<<<<<< Updated upstream
                             Id = new Guid("1b5e90a4-4901-4f26-a2fe-7ec1db2da30e"),
                             CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 536, DateTimeKind.Utc).AddTicks(4257),
                             Email = "user@user.com",
                             HashedPassword = "$2a$11$sEmG6fB3K089tN2h6g0NTO456d9EsIHrcC1km/SdGsZVyXeoV5pS.",
-=======
-                            Id = new Guid("3b5b0d33-2813-4614-8957-d28862749958"),
-                            CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 424, DateTimeKind.Utc).AddTicks(1533),
-                            Email = "user@user.com",
-                            HashedPassword = "$2a$11$FMjilaJWIkMx8T4/nkFtceYwc5r2eW.ZUzKsFTHWNyGGpU9dLQ5Im",
->>>>>>> Stashed changes
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
                             Username = "user"
