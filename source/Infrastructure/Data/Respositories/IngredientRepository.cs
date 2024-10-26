@@ -17,15 +17,26 @@ namespace Project.Infrastructure.Data.Respositories
         {
             _dbContext = dbContext;
         }
+        
 
-        public async Task<IEnumerable<Ingredient>> GetAllAsync(CancellationToken cancellationToken)
+     public async Task<IEnumerable<Ingredient>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _dbContext.Ingredient.ToListAsync(cancellationToken);
+            return await _dbContext.Ingredient
+                .Where(i => !i.IsDeleted)
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<Ingredient?> GetAsync(Expression<Func<Ingredient, bool>> predicate)
         {
-            return await _dbContext.Ingredient.FirstOrDefaultAsync(predicate);
+            return await _dbContext.Ingredient
+                .Where(i => !i.IsDeleted) 
+                .FirstOrDefaultAsync(predicate);
+        }
+
+          public void DeleteSoft(Ingredient ingredient)
+        {
+            ingredient.IsDeleted = true;
+            _dbContext.Update(ingredient); 
         }
     }
 }

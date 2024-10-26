@@ -1,5 +1,4 @@
-﻿
-using Project.Domain.Interfaces.Data.Repositories;
+﻿using Project.Domain.Interfaces.Data.Repositories;
 using Project.Domain.Notifications;
 
 namespace Project.Application.Features.Queries.GetAllIngredients
@@ -17,9 +16,12 @@ namespace Project.Application.Features.Queries.GetAllIngredients
 
         public async Task<GetAllIngredientsQueryResponse?> Handle(GetAllIngredientsQuery request, CancellationToken cancellationToken)
         {
-            var totalIngredients = _ingredientRepository.GetAll().Count();
+            // Retrieve only non-deleted ingredients
+            var allIngredients = await _ingredientRepository.GetAllAsync(cancellationToken);
+            var totalIngredients = allIngredients.Count(); // Total items for pagination calculation
 
-            var dbIngredients = _ingredientRepository.GetAll()
+            // Apply pagination
+            var dbIngredients = allIngredients
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToList();
@@ -32,7 +34,8 @@ namespace Project.Application.Features.Queries.GetAllIngredients
                     Measurement = dbIngredient.Measurement,
                     Stock = dbIngredient.Stock,
                     MinimumStock = dbIngredient.MinimumStock,
-                    UnitPrice = dbIngredient.UnitPrice
+                    UnitPrice = dbIngredient.UnitPrice,
+                    CreatedAt = dbIngredient.CreatedAt
                 })
                 .ToList();
 
@@ -47,4 +50,4 @@ namespace Project.Application.Features.Queries.GetAllIngredients
             };
         }
     }
-    }
+}

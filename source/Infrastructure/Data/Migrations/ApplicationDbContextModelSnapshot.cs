@@ -33,6 +33,10 @@ namespace Project.Infrastructure.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DT_CREATEDAT");
 
+                    b.Property<DateTime>("DataEntrada")
+                        .HasColumnType("datetime")
+                        .HasColumnName("DT_ENTRADA");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit")
                         .HasColumnName("FL_DELETED");
@@ -141,14 +145,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2338),
+                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1395),
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2342),
+                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1400),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -242,20 +246,20 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b8a0d1e6-f8a4-44bb-82bc-8342cceba977"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 383, DateTimeKind.Utc).AddTicks(2519),
+                            Id = new Guid("e3697010-846a-4628-ad9e-3906952fa35e"),
+                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1589),
                             Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$j2EXuNjE2IBvkRe62ap9Vuflu1Z1tHCCr.Ts8umKZQ0FPHMIi1PXe",
+                            HashedPassword = "$2a$11$Kvn/YQATOYIBgiOREvS6vOnM7DgT8FaPDgOct80TKgJS8ccnxVSQq",
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
                             Username = "admin"
                         },
                         new
                         {
-                            Id = new Guid("1b5e90a4-4901-4f26-a2fe-7ec1db2da30e"),
-                            CreatedAt = new DateTime(2024, 10, 17, 16, 51, 18, 536, DateTimeKind.Utc).AddTicks(4257),
+                            Id = new Guid("426e7776-d69d-4fdb-9a6d-02f81b5e6ae6"),
+                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 12, 41, DateTimeKind.Utc).AddTicks(5942),
                             Email = "user@user.com",
-                            HashedPassword = "$2a$11$sEmG6fB3K089tN2h6g0NTO456d9EsIHrcC1km/SdGsZVyXeoV5pS.",
+                            HashedPassword = "$2a$11$UMsnaKK7H5k9OnYKpoL9w.5mB53/uwi5xn8IyeALHbDnwKR79cs8G",
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
                             Username = "user"
