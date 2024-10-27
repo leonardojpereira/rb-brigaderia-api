@@ -16,11 +16,9 @@ namespace Project.Application.Features.Queries.GetAllIngredients
 
         public async Task<GetAllIngredientsQueryResponse?> Handle(GetAllIngredientsQuery request, CancellationToken cancellationToken)
         {
-            // Retrieve only non-deleted ingredients
             var allIngredients = await _ingredientRepository.GetAllAsync(cancellationToken);
-            var totalIngredients = allIngredients.Count(); // Total items for pagination calculation
+            var totalIngredients = allIngredients.Count(); 
 
-            // Apply pagination
             var dbIngredients = allIngredients
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
@@ -35,7 +33,8 @@ namespace Project.Application.Features.Queries.GetAllIngredients
                     Stock = dbIngredient.Stock,
                     MinimumStock = dbIngredient.MinimumStock,
                     UnitPrice = dbIngredient.UnitPrice,
-                    CreatedAt = dbIngredient.CreatedAt
+                    CreatedAt = dbIngredient.CreatedAt,
+                    UpdatedAt = dbIngredient.UpdatedAt
                 })
                 .ToList();
 

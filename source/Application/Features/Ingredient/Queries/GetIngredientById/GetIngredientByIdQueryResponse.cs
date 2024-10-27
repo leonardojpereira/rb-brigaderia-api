@@ -14,4 +14,5 @@ public class GetIngredientByIdIngredientDTO
     public decimal MinimumStock { get; set; }
     public decimal UnitPrice { get; set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

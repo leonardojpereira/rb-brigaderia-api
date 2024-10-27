@@ -32,7 +32,8 @@ namespace Project.Application.Features.Queries.GetIngredientById
                 Stock = dbIngredient.Stock,
                 MinimumStock = dbIngredient.MinimumStock,
                 UnitPrice = dbIngredient.UnitPrice,
-                CreatedAt = dbIngredient.CreatedAt
+                CreatedAt = dbIngredient.CreatedAt,
+                UpdatedAt = dbIngredient.UpdatedAt,
             };
 
             return new GetIngredientByIdQueryResponse { Ingredient = ingredientDTO };
