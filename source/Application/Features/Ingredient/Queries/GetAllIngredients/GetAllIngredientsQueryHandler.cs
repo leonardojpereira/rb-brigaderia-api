@@ -16,10 +16,15 @@ namespace Project.Application.Features.Queries.GetAllIngredients
 
         public async Task<GetAllIngredientsQueryResponse?> Handle(GetAllIngredientsQuery request, CancellationToken cancellationToken)
         {
-            var allIngredients = await _ingredientRepository.GetAllAsync(cancellationToken);
-            var totalIngredients = allIngredients.Count(); 
+            // Busca todos os ingredientes aplicando o filtro se ele estiver presente
+            var filteredIngredients = string.IsNullOrEmpty(request.Filter)
+                ? await _ingredientRepository.GetAllAsync(cancellationToken)
+                : await _ingredientRepository.GetByFilterAsync(request.Filter, cancellationToken);
 
-            var dbIngredients = allIngredients
+            var totalIngredients = filteredIngredients.Count();
+
+            // Paginação
+            var dbIngredients = filteredIngredients
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToList();

@@ -50,9 +50,9 @@ namespace Project.WebApi.Controllers
         [Authorize(Roles = "Admin, User")]
         [HttpGet]
         [ProducesResponseType(typeof(GetAllIngredientsQueryResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllIngredients([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 7)
+        public async Task<IActionResult> GetAllIngredients([FromQuery] string? filter = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 7)
         {
-            var query = new GetAllIngredientsQuery(pageNumber, pageSize);
+            var query = new GetAllIngredientsQuery(pageNumber, pageSize, filter);
             return Response(await _mediatorHandler.Send(query));
         }
 

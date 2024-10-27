@@ -11,6 +11,8 @@ namespace Project.Domain.Interfaces.Data.Repositories
         void DeleteSoft(Ingredient ingredient);
 
         Task<IEnumerable<Ingredient>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<Ingredient>> GetByFilterAsync(string filter, CancellationToken cancellationToken);
+
 
     }
 
