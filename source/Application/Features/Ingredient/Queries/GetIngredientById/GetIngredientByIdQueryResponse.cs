@@ -2,7 +2,7 @@
 
 public class GetIngredientByIdQueryResponse
 {
-    public GetIngredientByIdIngredientDTO? Ingredient { get; set; } 
+    public GetIngredientByIdIngredientDTO? Ingredient { get; set; }
 }
 
 public class GetIngredientByIdIngredientDTO
@@ -13,4 +13,6 @@ public class GetIngredientByIdIngredientDTO
     public decimal Stock { get; set; }
     public decimal MinimumStock { get; set; }
     public decimal UnitPrice { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

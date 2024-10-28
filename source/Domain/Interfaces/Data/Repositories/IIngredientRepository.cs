@@ -8,5 +8,13 @@ namespace Project.Domain.Interfaces.Data.Repositories
     public interface IIngredientRepository : IRepositoryBase<Ingredient>
     {
         Task<Ingredient?> GetAsync(Expression<Func<Ingredient, bool>> predicate);
+        void DeleteSoft(Ingredient ingredient);
+
+        Task<IEnumerable<Ingredient>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<Ingredient>> GetByFilterAsync(string filter, CancellationToken cancellationToken);
+
+
     }
+
+
 }

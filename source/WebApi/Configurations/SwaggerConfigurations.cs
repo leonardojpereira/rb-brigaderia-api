@@ -36,7 +36,7 @@ public static class SwaggerConfigurations
                 }
             });
 
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Brigadeiria Api", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Brigaderia Api", Version = "v1" });
         });
 
         return services;
@@ -45,7 +45,7 @@ public static class SwaggerConfigurations
     public static WebApplication UseSwaggerConfiguration(this WebApplication app)
     {
         app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "Brigadeiria Api"));
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "Brigaderia Api"));
 
         return app;
     }

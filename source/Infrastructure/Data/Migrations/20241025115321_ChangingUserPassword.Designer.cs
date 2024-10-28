@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Project.Infrastructure.Data;
 namespace Project.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241025115321_ChangingUserPassword")]
+    partial class ChangingUserPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,10 +35,6 @@ namespace Project.Infrastructure.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("DT_CREATEDAT");
-
-                    b.Property<DateTime>("DataEntrada")
-                        .HasColumnType("datetime")
-                        .HasColumnName("DT_ENTRADA");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit")
@@ -180,14 +179,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1395),
+                            CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2516),
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1400),
+                            CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2520),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -281,20 +280,20 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e3697010-846a-4628-ad9e-3906952fa35e"),
-                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1589),
+                            Id = new Guid("f4d74cff-e86e-452e-99d7-8cc8475d76c5"),
+                            CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 279, DateTimeKind.Utc).AddTicks(2768),
                             Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$Kvn/YQATOYIBgiOREvS6vOnM7DgT8FaPDgOct80TKgJS8ccnxVSQq",
+                            HashedPassword = "$2a$11$7433LszZM2zhoNrV14Ewb.nkRxslplB8htiR9GoRe.acQWmddqp76",
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
                             Username = "admin"
                         },
                         new
                         {
-                            Id = new Guid("426e7776-d69d-4fdb-9a6d-02f81b5e6ae6"),
-                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 12, 41, DateTimeKind.Utc).AddTicks(5942),
+                            Id = new Guid("3b5b0d33-2813-4614-8957-d28862749958"),
+                            CreatedAt = new DateTime(2024, 10, 25, 11, 53, 20, 424, DateTimeKind.Utc).AddTicks(1533),
                             Email = "user@user.com",
-                            HashedPassword = "$2a$11$UMsnaKK7H5k9OnYKpoL9w.5mB53/uwi5xn8IyeALHbDnwKR79cs8G",
+                            HashedPassword = "$2a$11$FMjilaJWIkMx8T4/nkFtceYwc5r2eW.ZUzKsFTHWNyGGpU9dLQ5Im",
                             IsDeleted = false,
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
                             Username = "user"
