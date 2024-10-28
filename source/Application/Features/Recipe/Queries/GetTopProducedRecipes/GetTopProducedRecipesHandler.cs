@@ -13,24 +13,32 @@ public class GetTopProducedRecipesQueryHandler : IRequestHandler<GetTopProducedR
 
     public async Task<GetTopProducedRecipesQueryResponse?> Handle(GetTopProducedRecipesQuery request, CancellationToken cancellationToken)
     {
-        // Consulta os IDs das receitas mais produzidas
         var topProductions = await _productionRepository.GetTopProducedRecipesAsync(3);
 
-        // Consulta os detalhes das receitas correspondentes
-        var topProducedRecipes = topProductions.Select(top => {
-            var recipe = _recipeRepository.Get(r => r.Id == top.ReceitaId);
-            return new GetTopProducedRecipeDTO
+        var topProducedRecipes = new List<GetTopProducedRecipeDTO>();
+
+        foreach (var top in topProductions)
+        {
+            var recipe = await _recipeRepository.GetWithIngredientsAsync(top.ReceitaId);
+
+            decimal totalCost = recipe?.Ingredientes.Sum(ri =>
+                (ri.Ingredient?.UnitPrice ?? 0) * ri.QuantidadeNecessaria) ?? 0;
+
+            topProducedRecipes.Add(new GetTopProducedRecipeDTO
             {
                 Id = recipe?.Id ?? Guid.Empty,
                 Nome = recipe?.Nome ?? "Desconhecido",
                 Descricao = recipe?.Descricao ?? "Descrição indisponível",
-                TotalProduzido = top.TotalProduzido
-            };
-        }).ToList();
+                TotalProduzido = top.TotalProduzido,
+                CustoTotal = totalCost
+            });
+        }
 
         return new GetTopProducedRecipesQueryResponse
         {
             TopProducedRecipes = topProducedRecipes
         };
     }
+
 }
+

@@ -11,4 +11,6 @@ public class GetTopProducedRecipeDTO
     public string Nome { get; set; } = string.Empty;
     public string Descricao { get; set; } = string.Empty;
     public int TotalProduzido { get; set; }
+    public decimal CustoTotal { get; set; }
 }
+
