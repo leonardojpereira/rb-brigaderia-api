@@ -10,6 +10,8 @@
         public Guid Id { get; set; }
         public string Nome { get; set; } = string.Empty;
         public string Descricao { get; set; } = string.Empty;
+
+        public decimal CustoTotal { get; set; }
         public List<GetRecipeByIdIngredientDTO> Ingredients { get; set; } = new();
     }
 

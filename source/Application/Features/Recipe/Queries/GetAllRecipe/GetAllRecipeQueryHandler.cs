@@ -18,32 +18,36 @@ namespace Project.Application.Features.Queries.GetAllRecipe
 
         public async Task<GetAllRecipeQueryResponse?> Handle(GetAllRecipeQuery request, CancellationToken cancellationToken)
         {
-            // Busca todas as receitas
             var dbRecipes = _recipeRepository.GetAll();
 
-            var recipeDTOs = dbRecipes.Select(dbRecipe => new GetAllRecipeDTO
+            var recipeDTOs = dbRecipes.Select(dbRecipe =>
             {
-                Id = dbRecipe.Id,
-                Nome = dbRecipe.Nome,
-                Descricao = dbRecipe.Descricao,
-                Ingredientes = dbRecipe.Ingredientes.Select(i =>
+                decimal totalCost = dbRecipe.Ingredientes.Sum(i =>
+                    (i.Ingredient?.UnitPrice ?? 0) * i.QuantidadeNecessaria);
+
+                return new GetAllRecipeDTO
                 {
-                    var ingrediente = _ingredientRepository.Get(ing => ing.Id == i.IngredienteId);
-                    return new GetAllRecipeIngredientDTO
+                    Id = dbRecipe.Id,
+                    Nome = dbRecipe.Nome,
+                    Descricao = dbRecipe.Descricao,
+                    CustoTotal = totalCost,  
+                    Ingredientes = dbRecipe.Ingredientes.Select(i =>
                     {
-                        IngredienteId = i.IngredienteId,
-                        QuantidadeNecessaria = i.QuantidadeNecessaria,
-                        Nome = ingrediente?.Name ?? "Desconhecido"
-                    };
-                }).ToList()
+                        var ingrediente = _ingredientRepository.Get(ing => ing.Id == i.IngredienteId);
+                        return new GetAllRecipeIngredientDTO
+                        {
+                            IngredienteId = i.IngredienteId,
+                            QuantidadeNecessaria = i.QuantidadeNecessaria,
+                            Nome = ingrediente?.Name ?? "Desconhecido"
+                        };
+                    }).ToList()
+                };
             }).ToList();
 
             await _mediator.Publish(new DomainSuccessNotification("GetAllRecipe", "Recipes retrieved successfully"), cancellationToken);
 
-            return new GetAllRecipeQueryResponse
-            {
-                Recipes = recipeDTOs
-            };
+            return new GetAllRecipeQueryResponse { Recipes = recipeDTOs };
         }
+
     }
 }

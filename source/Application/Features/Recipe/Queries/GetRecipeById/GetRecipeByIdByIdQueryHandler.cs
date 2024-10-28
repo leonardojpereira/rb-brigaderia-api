@@ -32,15 +32,20 @@ namespace Project.Application.Features.Queries.GetRecipeById
                 QuantidadeNecessaria = i.QuantidadeNecessaria
             }).ToList();
 
+            decimal totalCost = dbRecipe.Ingredientes.Sum(i =>
+                (i.Ingredient?.UnitPrice ?? 0) * i.QuantidadeNecessaria);
+
             var recipeDTO = new GetRecipeByIdRecipeDTO
             {
                 Id = dbRecipe.Id,
                 Nome = dbRecipe.Nome,
                 Descricao = dbRecipe.Descricao,
+                CustoTotal = totalCost,
                 Ingredients = ingredients
             };
 
             return new GetRecipeByIdQueryResponse { Recipe = recipeDTO };
         }
+
     }
 }
