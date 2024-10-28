@@ -60,5 +60,14 @@ namespace Project.WebApi.Controllers
             var result = await _mediatorHandler.Send(new DeleteRecipeCommand(id));
             return Response(result);
         }
+
+        [Authorize(Roles = "Admin, User")]
+        [HttpGet("TopProduced")]
+        [ProducesResponseType(typeof(GetTopProducedRecipesQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetTopProducedRecipes()
+        {
+            var result = await _mediatorHandler.Send(new GetTopProducedRecipesQuery());
+            return Response(result);
+        }
     }
 }

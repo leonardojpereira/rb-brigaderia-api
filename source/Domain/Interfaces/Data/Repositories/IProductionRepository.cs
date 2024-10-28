@@ -11,5 +11,7 @@ namespace Project.Domain.Interfaces.Data.Repositories
         Task<IEnumerable<Production>> GetAllAsync();
 
         Task AddAsync(Production production);
+
+        Task<List<(Guid ReceitaId, int TotalProduzido)>> GetTopProducedRecipesAsync(int top);
     }
 }
