@@ -35,5 +35,21 @@ namespace Project.Infrastructure.Data.Respositories
         {
             await _dbContext.Production.AddAsync(production);
         }
+
+        public async Task<List<(Guid ReceitaId, int TotalProduzido)>> GetTopProducedRecipesAsync(int top)
+{
+    var topProducedRecipes = await _dbContext.Production
+        .GroupBy(p => p.ReceitaId)
+        .Select(g => new { ReceitaId = g.Key, TotalProduzido = g.Sum(p => p.QuantidadeProduzida) })
+        .OrderByDescending(g => g.TotalProduzido)
+        .Take(top)
+        .ToListAsync();
+
+    return topProducedRecipes
+        .Select(g => (g.ReceitaId, g.TotalProduzido))
+        .ToList();
+}
+
+
     }
 }
