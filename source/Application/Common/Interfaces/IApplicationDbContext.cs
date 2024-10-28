@@ -12,7 +12,10 @@ public interface IApplicationDbContext
 
     public DbSet<Recipe> Recipe { get; set; }
 
-     public DbSet<RecipeIngredient> RecipeIngredient { get; set; }
+    public DbSet<RecipeIngredient> RecipeIngredient { get; set; }
+
+    public DbSet<Production> Production { get; set; }
+
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
