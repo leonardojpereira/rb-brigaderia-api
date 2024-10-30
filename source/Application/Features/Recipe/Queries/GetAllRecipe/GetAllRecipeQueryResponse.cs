@@ -3,6 +3,7 @@
     public class GetAllRecipeQueryResponse
     {
         public IEnumerable<GetAllRecipeDTO> Recipes { get; set; } = new List<GetAllRecipeDTO>();
+         public int TotalItems { get; set; }
     }
 
     public class GetAllRecipeDTO

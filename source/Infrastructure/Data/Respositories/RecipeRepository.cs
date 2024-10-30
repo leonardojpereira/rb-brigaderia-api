@@ -56,5 +56,28 @@ namespace Project.Infrastructure.Data.Respositories
                 .ThenInclude(ri => ri.Ingredient)
                 .ToList();
         }
+
+        public async Task<(IEnumerable<Recipe> recipes, int totalItems)> GetPagedRecipesAsync(int pageNumber, int pageSize, string? filter)
+        {
+            var query = _dbContext.Recipe
+                .Include(r => r.Ingredientes)
+                .ThenInclude(ri => ri.Ingredient)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(r => r.Nome.Contains(filter) || r.Descricao.Contains(filter));
+            }
+
+            var totalItems = await query.CountAsync();
+
+            var recipes = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (recipes, totalItems);
+        }
+
     }
 }

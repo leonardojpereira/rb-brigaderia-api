@@ -17,37 +17,39 @@ namespace Project.Application.Features.Queries.GetAllRecipe
         }
 
         public async Task<GetAllRecipeQueryResponse?> Handle(GetAllRecipeQuery request, CancellationToken cancellationToken)
+{
+    // Obter receitas paginadas e total de itens
+    var (pagedRecipes, totalItems) = await _recipeRepository.GetPagedRecipesAsync(request.PageNumber, request.PageSize, request.Filter);
+
+    var recipeDTOs = pagedRecipes.Select(dbRecipe =>
+    {
+        decimal totalCost = dbRecipe.Ingredientes.Sum(i =>
+            (i.Ingredient?.UnitPrice ?? 0) * i.QuantidadeNecessaria);
+
+        return new GetAllRecipeDTO
         {
-            var dbRecipes = _recipeRepository.GetAll();
-
-            var recipeDTOs = dbRecipes.Select(dbRecipe =>
+            Id = dbRecipe.Id,
+            Nome = dbRecipe.Nome,
+            Descricao = dbRecipe.Descricao,
+            CustoTotal = totalCost,
+            Ingredientes = dbRecipe.Ingredientes.Select(i => new GetAllRecipeIngredientDTO
             {
-                decimal totalCost = dbRecipe.Ingredientes.Sum(i =>
-                    (i.Ingredient?.UnitPrice ?? 0) * i.QuantidadeNecessaria);
+                IngredienteId = i.IngredienteId,
+                QuantidadeNecessaria = i.QuantidadeNecessaria,
+                Nome = i.Ingredient?.Name ?? "Desconhecido"
+            }).ToList()
+        };
+    }).ToList();
 
-                return new GetAllRecipeDTO
-                {
-                    Id = dbRecipe.Id,
-                    Nome = dbRecipe.Nome,
-                    Descricao = dbRecipe.Descricao,
-                    CustoTotal = totalCost,  
-                    Ingredientes = dbRecipe.Ingredientes.Select(i =>
-                    {
-                        var ingrediente = _ingredientRepository.Get(ing => ing.Id == i.IngredienteId);
-                        return new GetAllRecipeIngredientDTO
-                        {
-                            IngredienteId = i.IngredienteId,
-                            QuantidadeNecessaria = i.QuantidadeNecessaria,
-                            Nome = ingrediente?.Name ?? "Desconhecido"
-                        };
-                    }).ToList()
-                };
-            }).ToList();
+    await _mediator.Publish(new DomainSuccessNotification("GetAllRecipe", "Recipes retrieved successfully"), cancellationToken);
 
-            await _mediator.Publish(new DomainSuccessNotification("GetAllRecipe", "Recipes retrieved successfully"), cancellationToken);
+    return new GetAllRecipeQueryResponse
+    {
+        Recipes = recipeDTOs,
+        TotalItems = totalItems
+    };
+}
 
-            return new GetAllRecipeQueryResponse { Recipes = recipeDTOs };
-        }
 
     }
 }

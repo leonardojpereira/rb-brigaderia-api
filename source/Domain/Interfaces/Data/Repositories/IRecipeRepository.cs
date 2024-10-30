@@ -12,5 +12,8 @@ namespace Project.Domain.Interfaces.Data.Repositories
         Task<IEnumerable<Recipe>> GetAllAsync();
 
         Task<Recipe?> GetWithIngredientsAsync(Guid recipeId);
+
+        Task<(IEnumerable<Recipe> recipes, int totalItems)> GetPagedRecipesAsync(int pageNumber, int pageSize, string? filter);
+
     }
 }
