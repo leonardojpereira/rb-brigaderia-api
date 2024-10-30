@@ -23,7 +23,14 @@ namespace Project.Infrastructure.Data.Respositories
             return await _dbContext.Recipe
                 .Include(r => r.Ingredientes)
                 .ThenInclude(ri => ri.Ingredient)
-                .FirstOrDefaultAsync(predicate);
+                .FirstOrDefaultAsync(Expression.Lambda<Func<Recipe, bool>>(
+                    Expression.AndAlso(
+                        predicate.Body,
+                        Expression.Not(Expression.Property(predicate.Parameters[0], nameof(Recipe.IsDeleted)))
+                    ),
+                    predicate.Parameters
+                ));
+
         }
 
         public async Task AddAsync(Recipe recipe)
@@ -37,23 +44,26 @@ namespace Project.Infrastructure.Data.Respositories
             return await _dbContext.Recipe
                 .Include(r => r.Ingredientes)
                 .ThenInclude(ri => ri.Ingredient)
+                .Where(r => !r.IsDeleted)
                 .ToListAsync();
+
         }
 
 
         public async Task<Recipe?> GetWithIngredientsAsync(Guid recipeId)
         {
             return await _dbContext.Recipe
-                .Include(r => r.Ingredientes)
+                 .Include(r => r.Ingredientes)
                 .ThenInclude(ri => ri.Ingredient)
-                .FirstOrDefaultAsync(r => r.Id == recipeId);
+                .FirstOrDefaultAsync(r => r.Id == recipeId && !r.IsDeleted);
         }
 
         public override IEnumerable<Recipe> GetAll()
         {
             return _dbContext.Recipe
-                .Include(r => r.Ingredientes)
+                 .Include(r => r.Ingredientes)
                 .ThenInclude(ri => ri.Ingredient)
+                .Where(r => !r.IsDeleted)
                 .ToList();
         }
 
@@ -62,6 +72,7 @@ namespace Project.Infrastructure.Data.Respositories
             var query = _dbContext.Recipe
                 .Include(r => r.Ingredientes)
                 .ThenInclude(ri => ri.Ingredient)
+                .Where(r => !r.IsDeleted)
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(filter))
@@ -77,6 +88,12 @@ namespace Project.Infrastructure.Data.Respositories
                 .ToListAsync();
 
             return (recipes, totalItems);
+        }
+
+        public void DeleteSoft(Recipe recipe)
+        {
+            recipe.IsDeleted = true;
+            _dbContext.Update(recipe);
         }
 
     }

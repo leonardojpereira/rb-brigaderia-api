@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace Project.Domain.Entities
 {
-    public class Recipe
+    public class Recipe : BaseEntity
     {
-        public Guid Id { get; set; } 
         public string Nome { get; set; } = string.Empty; 
         public string Descricao { get; set; } = string.Empty; 
         
