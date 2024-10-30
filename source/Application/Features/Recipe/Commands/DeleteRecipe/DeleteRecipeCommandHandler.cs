@@ -19,19 +19,18 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, D
 
     public async Task<DeleteRecipeCommandResponse?> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
     {
-        var Recipe = _RecipeRepository.Get(Recipe => Recipe.Id == request.Id);
+        var recipe = await _RecipeRepository.GetAsync(i => i.Id == request.Id);
 
-        if (Recipe is null)
+        if (recipe is null)
         {
-            await _mediator.Publish(new DomainNotification("DeleteRecipe", "Recipe not found"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("DeleteRecipe", "recipe not found"), cancellationToken);
             return default;
         }
 
-        _RecipeRepository.Delete(Recipe);
+        _RecipeRepository.DeleteSoft(recipe);
         _unitOfWork.Commit();
 
-        await _mediator.Publish(new DomainSuccessNotification("DeleteRecipe", "Recipe deleted successfully"), cancellationToken);
-        var response = new DeleteRecipeCommandResponse { };
-        return response;
+        await _mediator.Publish(new DomainSuccessNotification("DeleteRecipe", "recipe marked as deleted successfully"), cancellationToken);
+        return new DeleteRecipeCommandResponse();
     }
 }

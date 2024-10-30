@@ -9,8 +9,14 @@ namespace Project.Domain.Interfaces.Data.Repositories
         Task<Recipe?> GetAsync(Expression<Func<Recipe, bool>> predicate);
         Task AddAsync(Recipe Recipe);
 
+        void DeleteSoft(Recipe recipe);
+
+
         Task<IEnumerable<Recipe>> GetAllAsync();
 
         Task<Recipe?> GetWithIngredientsAsync(Guid recipeId);
+
+        Task<(IEnumerable<Recipe> recipes, int totalItems)> GetPagedRecipesAsync(int pageNumber, int pageSize, string? filter);
+
     }
 }
