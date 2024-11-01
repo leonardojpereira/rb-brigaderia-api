@@ -13,7 +13,7 @@ namespace Project.Application.Features.Commands.CreateProduction
                 .GreaterThan(0).WithMessage("QuantidadeProduzida must be greater than zero.");
 
             RuleFor(x => x.Request.DataProducao)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage("DataProducao must be a past or current date.");
+                .LessThan(DateTime.UtcNow).WithMessage("DataProducao must be a past or current date.");
         }
     }
 }

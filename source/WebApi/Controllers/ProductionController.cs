@@ -26,12 +26,14 @@ namespace Project.WebApi.Controllers
         }
         [Authorize(Roles = "Admin, User")]
         [HttpGet]
-        [ProducesResponseType(typeof(GetAllRecipeQueryResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllProductions()
+        [ProducesResponseType(typeof(GetAllProductionQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllProductions([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 7, [FromQuery] string? filter = null)
         {
-            var result = await _mediatorHandler.Send(new GetAllProductionQuery());
+            var query = new GetAllProductionQuery(pageNumber, pageSize, filter);
+            var result = await _mediatorHandler.Send(query);
             return Response(result);
         }
+
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(UpdateProductionCommandResponse), StatusCodes.Status200OK)]

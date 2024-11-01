@@ -4,6 +4,6 @@ namespace Project.Application.Features.Commands.CreateProduction
     {
         public Guid ReceitaId { get; set; }
         public int QuantidadeProduzida { get; set; }
-        public DateTime DataProducao { get; set; }
+        public DateTime DataProducao { get; set; } = DateTime.UtcNow;
     }
 }
