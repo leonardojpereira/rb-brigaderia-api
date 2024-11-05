@@ -29,11 +29,11 @@ public async Task<RegisterUserCommandResponse?> Handle(RegisterUserCommand comma
     }
 
     var user = new User(
+        nome: command.Request.Nome,
         username: command.Request.Username,
         password: command.Request.Password,
         email: command.Request.Email,
-        nome: command.Request.Nome,  // Novo campo "Nome"
-        roleId: RoleConstants.User
+        roleId: command.Request.RoleId // Novo campo RoleId
     );
 
     user = _userRepository.Add(user);
@@ -41,8 +41,15 @@ public async Task<RegisterUserCommandResponse?> Handle(RegisterUserCommand comma
 
     await _mediator.Publish(new DomainSuccessNotification("RegisterUser", "User registered successfully"), cancellationToken);
 
-    return new RegisterUserCommandResponse { Id = user.Id, Username = user.Username, Email = user.Email, Nome = user.Nome };
+    return new RegisterUserCommandResponse
+    {
+        Id = user.Id,
+        Nome = user.Nome,
+        Username = user.Username,
+        Email = user.Email
+    };
 }
+
 
     }
 }

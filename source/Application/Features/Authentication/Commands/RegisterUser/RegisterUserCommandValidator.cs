@@ -26,6 +26,11 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
                     .NotEmpty().WithMessage("{PropertyName} is required.")
                     .NotNull().WithMessage("{PropertyName} is required.")
                     .EmailAddress().WithMessage("{PropertyName} is invalid.");
-        });
+            });
+
+        RuleFor(x => x.Request.RoleId)
+    .NotEmpty().WithMessage("RoleId is required.")
+    .NotNull().WithMessage("RoleId is required.");
+
     }
 }
