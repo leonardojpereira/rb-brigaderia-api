@@ -4,6 +4,8 @@ namespace Project.Domain.Entities
 {
     public class User : BaseEntity
     {
+        public string Nome { get; private set; } = string.Empty;  
+
         public string Username { get; private set; } = string.Empty;
         public string HashedPassword { get; set; } = string.Empty;
         public string Email { get; private set; } = string.Empty;
@@ -12,8 +14,9 @@ namespace Project.Domain.Entities
 
         private User( ) { }
 
-        public User(string username, string password, string email, Guid roleId)
+        public User(string nome, string username, string password, string email, Guid roleId)
         {
+            Nome = nome;
             Username = username;
             HashedPassword = HashPassword(password);
             Email = email;
