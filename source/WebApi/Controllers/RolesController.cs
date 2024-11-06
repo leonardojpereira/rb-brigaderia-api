@@ -6,12 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Project.WebApi.Controllers
 {
-    [Authorize]
-    [ApiController]
-    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin, User"),]
     public class RolesController(INotificationHandler<DomainNotification> notifications,
-                                 INotificationHandler<DomainSuccessNotification> successNotifications,
-                                 IMediator mediatorHandler) : BaseController(notifications, successNotifications, mediatorHandler)
+                                    INotificationHandler<DomainSuccessNotification> successNotifications,
+                                    IMediator mediatorHandler) : BaseController(notifications, successNotifications, mediatorHandler)
     {
         private readonly IMediator _mediatorHandler = mediatorHandler;
 
