@@ -32,5 +32,18 @@ namespace Project.Infrastructure.Data.Repositories
                 .Where(u => u.Nome.Contains(filter) || u.Email.Contains(filter))
                 .ToListAsync(cancellationToken);
         }
+
+         public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return await _dbContext.User
+                .Include(u => u.Role) 
+                .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+        }
+
+        public void DeleteSoft(User user)
+        {
+            user.IsDeleted = true;
+            _dbContext.Update(user);
+        }
     }
 }

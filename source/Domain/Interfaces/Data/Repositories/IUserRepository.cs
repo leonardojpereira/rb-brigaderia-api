@@ -9,5 +9,9 @@ namespace Project.Domain.Interfaces.Data.Repositories
     {
         Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken);
         Task<IEnumerable<User>> GetByFilterAsync(string filter, CancellationToken cancellationToken);
+        Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+
+        void DeleteSoft(User user);
+
     }
 }
