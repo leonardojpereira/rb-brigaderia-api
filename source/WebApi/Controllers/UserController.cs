@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Project.Application.Features.Queries.GetAllUsers;
 using Project.Application.Features.Commands.DeleteUser;
 using Project.Application.Features.Commands.UpdateUser;
+using Project.Application.Features.Queries.GetUserById;
 
 namespace Project.WebApi.Controllers
 {
@@ -41,6 +42,16 @@ namespace Project.WebApi.Controllers
         {
             var command = new UpdateUserCommand(request, id);
             var result = await _mediatorHandler.Send(command);
+            return Response(result);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("GetUserById/{id}")]
+        [ProducesResponseType(typeof(GetUserByIdQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetUserById([FromRoute] Guid id)
+        {
+            var query = new GetUserByIdQuery(id);
+            var result = await _mediatorHandler.Send(query);
             return Response(result);
         }
     }
