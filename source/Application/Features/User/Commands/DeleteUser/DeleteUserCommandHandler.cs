@@ -30,6 +30,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Delet
         try
         {
             _userRepository.Delete(user);
+             _unitOfWork.Commit();
 
             await _mediator.Publish(new DomainSuccessNotification("DeleteUser", "User deleted successfully"), cancellationToken);
             return new DeleteUserCommandResponse();

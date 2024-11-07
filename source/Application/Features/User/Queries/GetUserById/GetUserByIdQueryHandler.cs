@@ -31,7 +31,8 @@ namespace Project.Application.Features.Queries.GetUserById
                 Id = dbUser.Id,
                 Nome = dbUser.Nome,
                 Email = dbUser.Email,
-                Role = dbUser.Role?.Name ?? "No Role Assigned" // Certifique-se de que o Role.Name está sendo carregado corretamente
+                roleId = dbUser.RoleId,
+                Role = dbUser.Role?.Name ?? string.Empty
             };
 
             return new GetUserByIdQueryResponse { User = userDTO };
