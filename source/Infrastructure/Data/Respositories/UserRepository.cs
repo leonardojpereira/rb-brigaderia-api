@@ -39,5 +39,13 @@ namespace Project.Infrastructure.Data.Repositories
                 .Include(u => u.Role) 
                 .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
         }
+
+        public async Task<User?> GetByUsernameOrEmailAsync(string login, CancellationToken cancellationToken)
+{
+    return await _dbContext.User
+        .Include(u => u.Role) 
+        .FirstOrDefaultAsync(u => u.Username == login || u.Email == login, cancellationToken);
+}
+
     }
 }
