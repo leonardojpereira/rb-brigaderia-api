@@ -4,12 +4,12 @@ namespace Project.Domain.Entities
 {
     public class User : BaseEntity
     {
-        public string Nome { get; private set; } = string.Empty;  
+        public string Nome { get; set; } = string.Empty;  
 
         public string Username { get; private set; } = string.Empty;
         public string HashedPassword { get; set; } = string.Empty;
-        public string Email { get; private set; } = string.Empty;
-        public Guid RoleId { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public Guid RoleId { get; set; }    
         public virtual Role? Role { get; set; }
 
         private User( ) { }

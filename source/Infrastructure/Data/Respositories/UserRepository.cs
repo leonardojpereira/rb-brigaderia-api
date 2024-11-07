@@ -39,11 +39,5 @@ namespace Project.Infrastructure.Data.Repositories
                 .Include(u => u.Role) 
                 .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
         }
-
-        public void DeleteSoft(User user)
-        {
-            user.IsDeleted = true;
-            _dbContext.Update(user);
-        }
     }
 }

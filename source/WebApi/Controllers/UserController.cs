@@ -6,6 +6,7 @@ using Project.Domain.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Project.Application.Features.Queries.GetAllUsers;
 using Project.Application.Features.Commands.DeleteUser;
+using Project.Application.Features.Commands.UpdateUser;
 
 namespace Project.WebApi.Controllers
 {
@@ -31,6 +32,16 @@ namespace Project.WebApi.Controllers
         public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
             return Response(await _mediatorHandler.Send(new DeleteUserCommand(id)));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("UpdateUser/{id}")]
+        [ProducesResponseType(typeof(UpdateUserCommandResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserCommandRequest request)
+        {
+            var command = new UpdateUserCommand(request, id);
+            var result = await _mediatorHandler.Send(command);
+            return Response(result);
         }
     }
 }
