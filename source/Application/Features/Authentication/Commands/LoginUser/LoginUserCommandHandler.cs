@@ -14,7 +14,9 @@ public class LoginUserCommandHandler(IUserRepository userRepository, ITokenServi
     public async Task<LoginUserCommandResponse?> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
         request.Request.Login = request.Request.Login.ToLowerInvariant();
-        var user = _userRepository.Get(x => x.Username == request.Request.Login || x.Email == request.Request.Login);
+
+        var user = await _userRepository.GetByUsernameOrEmailAsync(request.Request.Login, cancellationToken);
+
         if (user == null || !user.VerifyPassword(request.Request.Password))
         {
             await _mediator.Publish(new DomainNotification("LoginUser", "Invalid username or password"), cancellationToken);
@@ -22,11 +24,15 @@ public class LoginUserCommandHandler(IUserRepository userRepository, ITokenServi
         }
 
         var token = _tokenService.GenerateToken(user);
-        return new LoginUserCommandResponse { 
+        return new LoginUserCommandResponse
+        {
             Token = token,
             Username = user.Username,
+            Nome = user.Nome,
             Email = user.Email,
+            Role = user.Role?.Name ?? string.Empty,
             Id = user.Id
         };
     }
+
 }

@@ -7,8 +7,6 @@ using MediatR;
 
 namespace Project.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class StockMovementController : BaseController
     {
         private readonly IMediator _mediatorHandler;
@@ -20,7 +18,6 @@ namespace Project.WebApi.Controllers
             _mediatorHandler = mediatorHandler;
         }
 
-        // Endpoint para atualizar movimentação de estoque
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [ProducesResponseType(typeof(UpdateStockMovementCommandResponse), StatusCodes.Status200OK)]
@@ -29,7 +26,6 @@ namespace Project.WebApi.Controllers
             return Response(await _mediatorHandler.Send(new UpdateStockMovementCommand(request)));
         }
 
-        // Endpoint para obter todas as movimentações de estoque
         [Authorize(Roles = "Admin, User")]
         [HttpGet]
         [ProducesResponseType(typeof(GetAllStockMovementQueryResponse), StatusCodes.Status200OK)]
