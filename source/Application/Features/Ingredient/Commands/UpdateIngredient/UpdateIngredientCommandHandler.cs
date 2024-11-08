@@ -1,4 +1,5 @@
 using Project.Application.Common.Interfaces;
+using Project.Domain.Entities;
 using Project.Domain.Interfaces.Data.Repositories;
 using Project.Domain.Notifications;
 
@@ -9,23 +10,31 @@ public class UpdateIngredientCommandHandler : IRequestHandler<UpdateIngredientCo
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMediator _mediator;
     private readonly IIngredientRepository _ingredientRepository;
-    public UpdateIngredientCommandHandler(IUnitOfWork unitOfWork, IMediator mediator, IIngredientRepository ingredientRepository)
+    private readonly IStockMovementRepository _stockMovementRepository;
+
+    public UpdateIngredientCommandHandler(
+        IUnitOfWork unitOfWork,
+        IMediator mediator,
+        IIngredientRepository ingredientRepository,
+        IStockMovementRepository stockMovementRepository)
     {
         _unitOfWork = unitOfWork;
         _mediator = mediator;
         _ingredientRepository = ingredientRepository;
+        _stockMovementRepository = stockMovementRepository;
     }
 
     public async Task<UpdateIngredientCommandResponse?> Handle(UpdateIngredientCommand request, CancellationToken cancellationToken)
     {
-
         var dbIngredient = _ingredientRepository.Get(ingredient => ingredient.Id == request.Id);
-        
+
         if (dbIngredient is null)
         {
             await _mediator.Publish(new DomainNotification("UpdateIngredient", "Ingredient not found"), cancellationToken);
             return default;
         }
+
+        var previousStock = dbIngredient.Stock;
 
         dbIngredient.Name = request.Request.Name ?? dbIngredient.Name;
         dbIngredient.Measurement = request.Request.Measurement ?? dbIngredient.Measurement;
@@ -35,10 +44,30 @@ public class UpdateIngredientCommandHandler : IRequestHandler<UpdateIngredientCo
         dbIngredient.UpdatedAt = DateTime.UtcNow;
 
         var updateResult = _ingredientRepository.Update(dbIngredient);
+
+        if (request.Request.Stock.HasValue && request.Request.Stock.Value != previousStock)
+        {
+            var movementType = request.Request.Stock > previousStock ? "entrada" : "saida";
+            var quantityDifference = Math.Abs(request.Request.Stock.Value - previousStock);
+
+            var stockMovement = new StockMovement
+            {
+                IngredientId = dbIngredient.Id,
+                Quantity = quantityDifference,
+                Description = "Atualização de estoque",
+                MovementType = movementType,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _stockMovementRepository.AddAsync(stockMovement);
+        }
+
         _unitOfWork.Commit();
 
         await _mediator.Publish(new DomainSuccessNotification("UpdateIngredient", "Ingredient updated successfully"), cancellationToken);
-        var response = new UpdateIngredientCommandResponse {
+
+        var response = new UpdateIngredientCommandResponse
+        {
             Id = updateResult.Id,
             Name = updateResult.Name,
             Measurement = updateResult.Measurement,
@@ -46,6 +75,7 @@ public class UpdateIngredientCommandHandler : IRequestHandler<UpdateIngredientCo
             MinimumStock = updateResult.MinimumStock,
             UnitPrice = updateResult.UnitPrice
         };
-        return response;    
+
+        return response;
     }
 }

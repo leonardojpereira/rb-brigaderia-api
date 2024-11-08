@@ -18,7 +18,9 @@ public class StockMovementRepository : RepositoryBase<StockMovement>, IStockMove
 
         public async Task<StockMovement?> GetAsync(Expression<Func<StockMovement, bool>> predicate)
         {
-            return await _dbContext.StockMovement.FirstOrDefaultAsync(predicate);
+            return await _dbContext.StockMovement
+                .Include(sm => sm.Ingredient) 
+                .FirstOrDefaultAsync(predicate);
         }
         public async Task AddAsync(StockMovement stockMovement)
         {
@@ -27,7 +29,9 @@ public class StockMovementRepository : RepositoryBase<StockMovement>, IStockMove
         }
         public async Task<IEnumerable<StockMovement>> GetAllAsync()
         {
-            return await _dbContext.StockMovement.ToListAsync();
+            return await _dbContext.StockMovement
+                .Include(sm => sm.Ingredient) 
+                .ToListAsync();
         }
     }
 }

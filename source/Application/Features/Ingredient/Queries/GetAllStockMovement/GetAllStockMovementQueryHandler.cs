@@ -16,22 +16,39 @@ namespace Project.Application.Features.Queries.GetAllStockMovement
         {
             var dbStockMovements = await _stockMovementRepository.GetAllAsync();
 
-            // Aplicar paginação
-            var pagedStockMovements = dbStockMovements
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize)
+            var orderedMovements = dbStockMovements
+                .OrderBy(m => m.CreatedAt)
                 .ToList();
 
-            var stockMovementDTOs = pagedStockMovements
-                .Select(dbStockMovement => new GetAllStockMovementDTO
+            var ingredientStockMap = new Dictionary<Guid, decimal>();
+
+            var stockMovementDTOs = orderedMovements
+                .Select(dbStockMovement =>
                 {
-                    Id = dbStockMovement.Id,
-                    IngredientId = dbStockMovement.IngredientId,
-                    Quantity = dbStockMovement.Quantity,
-                    Description = dbStockMovement.Description,
-                    MovementType = dbStockMovement.MovementType,
-                    CreatedAt = dbStockMovement.CreatedAt
+                    if (!ingredientStockMap.TryGetValue(dbStockMovement.IngredientId, out var currentStock))
+                    {
+                        currentStock = dbStockMovement.Ingredient.Stock - (dbStockMovement.MovementType == "entrada" ? dbStockMovement.Quantity : -dbStockMovement.Quantity);
+                    }
+
+                    currentStock += dbStockMovement.MovementType == "entrada"
+                        ? dbStockMovement.Quantity
+                        : -dbStockMovement.Quantity;
+
+                    ingredientStockMap[dbStockMovement.IngredientId] = currentStock;
+
+                    return new GetAllStockMovementDTO
+                    {
+                        Id = dbStockMovement.Id,
+                        IngredientId = dbStockMovement.IngredientId,
+                        Ingredient = dbStockMovement.Ingredient.Name,
+                        Quantity = dbStockMovement.Quantity,
+                        Description = dbStockMovement.Description,
+                        MovementType = dbStockMovement.MovementType,
+                        CreatedAt = dbStockMovement.CreatedAt.ToLocalTime(),
+                    };
                 })
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
                 .ToList();
 
             var totalRecords = dbStockMovements.Count();
