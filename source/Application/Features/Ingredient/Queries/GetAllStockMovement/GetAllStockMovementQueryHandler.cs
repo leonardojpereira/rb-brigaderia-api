@@ -16,13 +16,18 @@ namespace Project.Application.Features.Queries.GetAllStockMovement
         {
             var dbStockMovements = await _stockMovementRepository.GetAllAsync();
 
-            var orderedMovements = dbStockMovements
-                .OrderBy(m => m.CreatedAt)
+            var dataInicial = request.DataInicial?.Date;
+            var dataFinal = request.DataFinal?.Date.AddDays(1).AddSeconds(-1);
+
+            var filteredMovements = dbStockMovements
+                .Where(m => (!dataInicial.HasValue || m.CreatedAt >= dataInicial.Value)
+                         && (!dataFinal.HasValue || m.CreatedAt <= dataFinal.Value))
+                .OrderByDescending(m => m.CreatedAt)
                 .ToList();
 
             var ingredientStockMap = new Dictionary<Guid, decimal>();
 
-            var stockMovementDTOs = orderedMovements
+            var stockMovementDTOs = filteredMovements
                 .Select(dbStockMovement =>
                 {
                     if (!ingredientStockMap.TryGetValue(dbStockMovement.IngredientId, out var currentStock))
@@ -51,7 +56,7 @@ namespace Project.Application.Features.Queries.GetAllStockMovement
                 .Take(request.PageSize)
                 .ToList();
 
-            var totalRecords = dbStockMovements.Count();
+            var totalRecords = filteredMovements.Count();
 
             return new GetAllStockMovementQueryResponse
             {
@@ -61,5 +66,7 @@ namespace Project.Application.Features.Queries.GetAllStockMovement
                 PageSize = request.PageSize
             };
         }
+
+
     }
 }

@@ -29,9 +29,13 @@ namespace Project.WebApi.Controllers
         [Authorize(Roles = "Admin, User")]
         [HttpGet]
         [ProducesResponseType(typeof(GetAllStockMovementQueryResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllStockMovements([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetAllStockMovements(
+     [FromQuery] int pageNumber = 1,
+     [FromQuery] int pageSize = 10,
+     [FromQuery] DateTime? dataInicial = null,
+     [FromQuery] DateTime? dataFinal = null)
         {
-            var query = new GetAllStockMovementQuery(pageNumber, pageSize);
+            var query = new GetAllStockMovementQuery(pageNumber, pageSize, dataInicial, dataFinal);
             return Response(await _mediatorHandler.Send(query));
         }
 
