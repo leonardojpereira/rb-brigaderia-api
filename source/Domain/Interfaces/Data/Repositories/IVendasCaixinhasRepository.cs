@@ -9,5 +9,8 @@ namespace Project.Domain.Interfaces.Data.Repositories
     {
         Task<VendasCaixinhas?> GetByDateAsync(DateTime dataVenda, CancellationToken cancellationToken);
         Task<decimal> GetMonthlyProfitAsync(int month, int year, CancellationToken cancellationToken);
+
+        Task<IEnumerable<VendasCaixinhas>> GetAllAsync(CancellationToken cancellationToken);
+
     }
 }

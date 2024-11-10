@@ -30,5 +30,13 @@ namespace Project.Infrastructure.Data.Repositories
                 .Where(v => v.DataVenda.Month == month && v.DataVenda.Year == year)
                 .SumAsync(v => v.Lucro, cancellationToken);
         }
+
+        public async Task<IEnumerable<VendasCaixinhas>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await _dbContext.VendasCaixinhas
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
+
     }
 }

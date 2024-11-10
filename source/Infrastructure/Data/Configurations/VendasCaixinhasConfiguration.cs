@@ -47,12 +47,14 @@ internal class VendasCaixinhasConfiguration : IEntityTypeConfiguration<VendasCai
                .HasColumnName("TX_LOCAL_VENDA")
                .IsRequired();
 
-        builder.Property(v => v.HorarioInicio)
+         builder.Property(v => v.HorarioInicio)
                .HasColumnName("TM_HORARIO_INICIO")
+               .HasMaxLength(8)
                .IsRequired();
 
         builder.Property(v => v.HorarioFim)
                .HasColumnName("TM_HORARIO_FIM")
+               .HasMaxLength(8) 
                .IsRequired();
     }
 }
