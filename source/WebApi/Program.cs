@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Project.Infrastructure.Data;
+using Project.Converters;
 using Project.WebApi.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +17,13 @@ builder.Services.AddCors(options =>
                .AllowAnyMethod();
     });
 });
+
+// Configuração do conversor para TimeSpan
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter());
+    });
 
 var app = builder.Build();
 
