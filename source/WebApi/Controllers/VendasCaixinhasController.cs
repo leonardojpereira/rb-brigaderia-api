@@ -6,6 +6,7 @@ using Project.Application.Features.Queries.GetAllIngredients;
 using Project.Application.Features.Queries.GetAllVendasCaixinhas;
 using Project.Application.Features.Queries.GetVendasCaixinhasById;
 using Project.Application.Features.Commands.UpdateVendasCaixinhas;
+using Project.Application.Features.Commands.DeleteVendasCaixinhas;
 
 namespace Project.WebApi.Controllers
 {
@@ -50,6 +51,14 @@ namespace Project.WebApi.Controllers
         {
             var command = new UpdateVendasCaixinhasCommand(request, id);
             return Response(await _mediatorHandler.Send(command));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(DeleteVendasCaixinhasCommandResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteVendasCaixinhas([FromRoute] Guid id)
+        {
+            return Response(await _mediatorHandler.Send(new DeleteVendasCaixinhasCommand(id)));
         }
 
     }
