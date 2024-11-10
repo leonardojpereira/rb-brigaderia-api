@@ -12,5 +12,7 @@ namespace Project.Domain.Interfaces.Data.Repositories
 
         Task<IEnumerable<VendasCaixinhas>> GetAllAsync(CancellationToken cancellationToken);
 
+        Task<VendasCaixinhas?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+
     }
 }

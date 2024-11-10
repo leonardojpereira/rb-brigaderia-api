@@ -37,6 +37,13 @@ namespace Project.Infrastructure.Data.Repositories
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }
+        
+        public async Task<VendasCaixinhas?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return await _dbContext.VendasCaixinhas
+                .AsNoTracking()
+                .FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
+        }
 
     }
 }
