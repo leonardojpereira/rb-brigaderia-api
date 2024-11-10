@@ -1,12 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using Project.Converters;
 using Project.WebApi.Configurations;
+using Project.Application.Services;
+using Project.Domain.Interfaces.Data.Repositories;
+using Project.Infrastructure.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebServices(builder.Configuration);
+
+builder.Services.AddScoped<IVendasCaixinhasMetricsService, VendasCaixinhasMetricsService>();
+builder.Services.AddScoped<IVendasCaixinhasRepository, VendasCaixinhasRepository>();
 
 builder.Services.AddCors(options =>
 {

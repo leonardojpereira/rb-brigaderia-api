@@ -18,7 +18,6 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
         {
             var allVendas = await _vendasCaixinhasRepository.GetAllAsync(cancellationToken);
 
-            // Aplicação do filtro de data específica
             if (request.Date.HasValue)
             {
                 allVendas = allVendas.Where(v => v.DataVenda.Date == request.Date.Value.Date).ToList();
@@ -26,7 +25,6 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
 
             var totalVendas = allVendas.Count();
 
-            // Paginação
             var paginatedVendas = allVendas
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
