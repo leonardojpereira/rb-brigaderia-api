@@ -24,10 +24,14 @@ namespace Project.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(typeof(GetAllVendasCaixinhasQueryResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllVendasCaixinhas([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 7)
+        public async Task<IActionResult> GetAllVendasCaixinhas(
+     [FromQuery] int pageNumber = 1,
+     [FromQuery] int pageSize = 7,
+     [FromQuery] DateTime? date = null)
         {
-            var query = new GetAllVendasCaixinhasQuery(pageNumber, pageSize);
+            var query = new GetAllVendasCaixinhasQuery(pageNumber, pageSize, date);
             return Response(await _mediatorHandler.Send(query));
         }
+
     }
 }

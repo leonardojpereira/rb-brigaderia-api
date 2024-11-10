@@ -17,8 +17,16 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
         public async Task<GetAllVendasCaixinhasQueryResponse?> Handle(GetAllVendasCaixinhasQuery request, CancellationToken cancellationToken)
         {
             var allVendas = await _vendasCaixinhasRepository.GetAllAsync(cancellationToken);
+
+            // Aplicação do filtro de data específica
+            if (request.Date.HasValue)
+            {
+                allVendas = allVendas.Where(v => v.DataVenda.Date == request.Date.Value.Date).ToList();
+            }
+
             var totalVendas = allVendas.Count();
 
+            // Paginação
             var paginatedVendas = allVendas
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
@@ -40,7 +48,7 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
                 })
                 .ToList();
 
-            await _mediator.Publish(new DomainSuccessNotification("GetAllVendasCaixinhas", "Vendas caixinhas retornadas com sucesso!"), cancellationToken);
+            await _mediator.Publish(new DomainSuccessNotification("GetAllVendasCaixinhas", "Vendas caixinhas retrieved successfully"), cancellationToken);
 
             return new GetAllVendasCaixinhasQueryResponse
             {
