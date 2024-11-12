@@ -23,9 +23,12 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
                 allVendas = allVendas.Where(v => v.DataVenda.Date == request.Date.Value.Date).ToList();
             }
 
-            var totalVendas = allVendas.Count();
+            // Ordenar as vendas por DataVenda em ordem decrescente
+            var orderedVendas = allVendas.OrderByDescending(v => v.DataVenda).ToList();
 
-            var paginatedVendas = allVendas
+            var totalVendas = orderedVendas.Count();
+
+            var paginatedVendas = orderedVendas
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToList();
@@ -56,5 +59,6 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
                 PageSize = request.PageSize
             };
         }
+
     }
 }
