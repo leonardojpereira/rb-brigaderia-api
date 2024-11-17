@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Project.Infrastructure.Data;
 namespace Project.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241110013642_AddVendasCaixinhasTable")]
+    partial class AddVendasCaixinhasTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,14 +191,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-                            CreatedAt = new DateTime(2024, 11, 10, 13, 8, 32, 154, DateTimeKind.Utc).AddTicks(7171),
+                            CreatedAt = new DateTime(2024, 11, 10, 1, 36, 41, 422, DateTimeKind.Utc).AddTicks(9734),
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-                            CreatedAt = new DateTime(2024, 11, 10, 13, 8, 32, 154, DateTimeKind.Utc).AddTicks(7175),
+                            CreatedAt = new DateTime(2024, 11, 10, 1, 36, 41, 422, DateTimeKind.Utc).AddTicks(9739),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -294,10 +297,10 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2865a55e-9019-4b59-bf6e-39fd571008e1"),
-                            CreatedAt = new DateTime(2024, 11, 10, 13, 8, 32, 154, DateTimeKind.Utc).AddTicks(7386),
+                            Id = new Guid("c0b7fe22-8aad-4176-aed0-6559f6f4f0f0"),
+                            CreatedAt = new DateTime(2024, 11, 10, 1, 36, 41, 423, DateTimeKind.Utc).AddTicks(26),
                             Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$U3tcTXOu7PC6ME3qw4MJEurY4wSCgAVgzTu1fjytct61udOhHfVEC",
+                            HashedPassword = "$2a$11$jjo3bqhpDKOrejZyoC5zQOoHB5LUxjPuP6Zf6wSwF2Kj4Km25I9xW",
                             IsDeleted = false,
                             Nome = "Admin",
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
@@ -305,10 +308,10 @@ namespace Project.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6ffe9b90-f5b8-48a0-a0e6-e045dbd19b61"),
-                            CreatedAt = new DateTime(2024, 11, 10, 13, 8, 32, 373, DateTimeKind.Utc).AddTicks(8901),
+                            Id = new Guid("88792e17-4afe-42b3-9bfd-d1db84d11a16"),
+                            CreatedAt = new DateTime(2024, 11, 10, 1, 36, 41, 615, DateTimeKind.Utc).AddTicks(9103),
                             Email = "user@user.com",
-                            HashedPassword = "$2a$11$TU1zRCn8DkCN6bpQyoQYZ.VjnMuBg77eUlU3ot86On3I2sa8lrF7C",
+                            HashedPassword = "$2a$11$uvJ0bWglIhnXwZcCqXkjNeTIs9vyVwmffL/DIqW6dNJJoAc6iPAA6",
                             IsDeleted = false,
                             Nome = "User",
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
@@ -334,16 +337,12 @@ namespace Project.Infrastructure.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DT_VENDA");
 
-                    b.Property<string>("HorarioFim")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)")
+                    b.Property<TimeSpan>("HorarioFim")
+                        .HasColumnType("time")
                         .HasColumnName("TM_HORARIO_FIM");
 
-                    b.Property<string>("HorarioInicio")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)")
+                    b.Property<TimeSpan>("HorarioInicio")
+                        .HasColumnType("time")
                         .HasColumnName("TM_HORARIO_INICIO");
 
                     b.Property<bool>("IsDeleted")

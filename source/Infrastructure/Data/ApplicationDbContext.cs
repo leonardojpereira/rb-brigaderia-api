@@ -18,6 +18,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<Production> Production { get; set; }
 
+    public DbSet<VendasCaixinhas> VendasCaixinhas { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
