@@ -16,25 +16,47 @@ namespace Project.Application.Features.Queries.GetAllStockMovement
         {
             var dbStockMovements = await _stockMovementRepository.GetAllAsync();
 
-            // Aplicar paginação
-            var pagedStockMovements = dbStockMovements
+            var dataInicial = request.DataInicial?.Date;
+            var dataFinal = request.DataFinal?.Date.AddDays(1).AddSeconds(-1);
+
+            var filteredMovements = dbStockMovements
+                .Where(m => (!dataInicial.HasValue || m.CreatedAt >= dataInicial.Value)
+                         && (!dataFinal.HasValue || m.CreatedAt <= dataFinal.Value))
+                .OrderByDescending(m => m.CreatedAt)
+                .ToList();
+
+            var ingredientStockMap = new Dictionary<Guid, decimal>();
+
+            var stockMovementDTOs = filteredMovements
+                .Select(dbStockMovement =>
+                {
+                    if (!ingredientStockMap.TryGetValue(dbStockMovement.IngredientId, out var currentStock))
+                    {
+                        currentStock = dbStockMovement.Ingredient.Stock - (dbStockMovement.MovementType == "entrada" ? dbStockMovement.Quantity : -dbStockMovement.Quantity);
+                    }
+
+                    currentStock += dbStockMovement.MovementType == "entrada"
+                        ? dbStockMovement.Quantity
+                        : -dbStockMovement.Quantity;
+
+                    ingredientStockMap[dbStockMovement.IngredientId] = currentStock;
+
+                    return new GetAllStockMovementDTO
+                    {
+                        Id = dbStockMovement.Id,
+                        IngredientId = dbStockMovement.IngredientId,
+                        Ingredient = dbStockMovement.Ingredient.Name,
+                        Quantity = dbStockMovement.Quantity,
+                        Description = dbStockMovement.Description,
+                        MovementType = dbStockMovement.MovementType,
+                        CreatedAt = dbStockMovement.CreatedAt.ToLocalTime(),
+                    };
+                })
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToList();
 
-            var stockMovementDTOs = pagedStockMovements
-                .Select(dbStockMovement => new GetAllStockMovementDTO
-                {
-                    Id = dbStockMovement.Id,
-                    IngredientId = dbStockMovement.IngredientId,
-                    Quantity = dbStockMovement.Quantity,
-                    Description = dbStockMovement.Description,
-                    MovementType = dbStockMovement.MovementType,
-                    CreatedAt = dbStockMovement.CreatedAt
-                })
-                .ToList();
-
-            var totalRecords = dbStockMovements.Count();
+            var totalRecords = filteredMovements.Count();
 
             return new GetAllStockMovementQueryResponse
             {
@@ -44,5 +66,7 @@ namespace Project.Application.Features.Queries.GetAllStockMovement
                 PageSize = request.PageSize
             };
         }
+
+
     }
 }

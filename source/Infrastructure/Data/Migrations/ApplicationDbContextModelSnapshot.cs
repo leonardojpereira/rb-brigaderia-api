@@ -33,10 +33,6 @@ namespace Project.Infrastructure.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DT_CREATEDAT");
 
-                    b.Property<DateTime>("DataEntrada")
-                        .HasColumnType("datetime")
-                        .HasColumnName("DT_ENTRADA");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit")
                         .HasColumnName("FL_DELETED");
@@ -114,15 +110,27 @@ namespace Project.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("PK_ID_RECIPE");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DT_CREATEDAT");
+
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TX_DESCRICAO");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("FL_DELETED");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TX_NOME");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DT_UPDATEDAT");
 
                     b.HasKey("Id");
 
@@ -180,14 +188,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1395),
+                            CreatedAt = new DateTime(2024, 11, 10, 13, 8, 32, 154, DateTimeKind.Utc).AddTicks(7171),
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1400),
+                            CreatedAt = new DateTime(2024, 11, 10, 13, 8, 32, 154, DateTimeKind.Utc).AddTicks(7175),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -259,6 +267,11 @@ namespace Project.Infrastructure.Data.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("FL_DELETED");
 
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TX_NOME");
+
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("FK_ROLEID");
@@ -281,24 +294,88 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e3697010-846a-4628-ad9e-3906952fa35e"),
-                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 11, 890, DateTimeKind.Utc).AddTicks(1589),
+                            Id = new Guid("2865a55e-9019-4b59-bf6e-39fd571008e1"),
+                            CreatedAt = new DateTime(2024, 11, 10, 13, 8, 32, 154, DateTimeKind.Utc).AddTicks(7386),
                             Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$Kvn/YQATOYIBgiOREvS6vOnM7DgT8FaPDgOct80TKgJS8ccnxVSQq",
+                            HashedPassword = "$2a$11$U3tcTXOu7PC6ME3qw4MJEurY4wSCgAVgzTu1fjytct61udOhHfVEC",
                             IsDeleted = false,
+                            Nome = "Admin",
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
                             Username = "admin"
                         },
                         new
                         {
-                            Id = new Guid("426e7776-d69d-4fdb-9a6d-02f81b5e6ae6"),
-                            CreatedAt = new DateTime(2024, 10, 26, 1, 3, 12, 41, DateTimeKind.Utc).AddTicks(5942),
+                            Id = new Guid("6ffe9b90-f5b8-48a0-a0e6-e045dbd19b61"),
+                            CreatedAt = new DateTime(2024, 11, 10, 13, 8, 32, 373, DateTimeKind.Utc).AddTicks(8901),
                             Email = "user@user.com",
-                            HashedPassword = "$2a$11$UMsnaKK7H5k9OnYKpoL9w.5mB53/uwi5xn8IyeALHbDnwKR79cs8G",
+                            HashedPassword = "$2a$11$TU1zRCn8DkCN6bpQyoQYZ.VjnMuBg77eUlU3ot86On3I2sa8lrF7C",
                             IsDeleted = false,
+                            Nome = "User",
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
                             Username = "user"
                         });
+                });
+
+            modelBuilder.Entity("Project.Domain.Entities.VendasCaixinhas", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("PK_ID_VENDAS_CAIXINHAS");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("CustoTotal")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("NR_CUSTO_TOTAL");
+
+                    b.Property<DateTime>("DataVenda")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DT_VENDA");
+
+                    b.Property<string>("HorarioFim")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)")
+                        .HasColumnName("TM_HORARIO_FIM");
+
+                    b.Property<string>("HorarioInicio")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)")
+                        .HasColumnName("TM_HORARIO_INICIO");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LocalVenda")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TX_LOCAL_VENDA");
+
+                    b.Property<decimal>("Lucro")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("NR_LUCRO");
+
+                    b.Property<decimal>("PrecoTotalVenda")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("NR_PRECO_TOTAL_VENDA");
+
+                    b.Property<int>("QuantidadeCaixinhas")
+                        .HasColumnType("int")
+                        .HasColumnName("NR_QUANTIDADE_CAIXINHAS");
+
+                    b.Property<decimal>("Salario")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("NR_SALARIO");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("T_VENDAS_CAIXINHAS", (string)null);
                 });
 
             modelBuilder.Entity("Project.Domain.Entities.Production", b =>

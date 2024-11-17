@@ -40,7 +40,7 @@ public class CreateProductionCommandHandler : IRequestHandler<CreateProductionCo
         {
             ReceitaId = recipe.Id,
             QuantidadeProduzida = request.Request.QuantidadeProduzida,
-            DataProducao = DateTime.UtcNow
+            DataProducao = request.Request.DataProducao
         };
         await _productionRepository.AddAsync(production);
 
@@ -89,4 +89,5 @@ public class CreateProductionCommandHandler : IRequestHandler<CreateProductionCo
             DataProducao = production.DataProducao
         };
     }
+
 }

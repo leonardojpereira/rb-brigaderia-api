@@ -16,6 +16,8 @@ public interface IApplicationDbContext
 
     public DbSet<Production> Production { get; set; }
 
+    public DbSet<VendasCaixinhas> VendasCaixinhas { get; set; }
+
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

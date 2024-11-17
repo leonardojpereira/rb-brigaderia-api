@@ -36,9 +36,10 @@ namespace Project.WebApi.Controllers
         [Authorize(Roles = "Admin, User")]
         [HttpGet]
         [ProducesResponseType(typeof(GetAllRecipeQueryResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllRecipes()
+        public async Task<IActionResult> GetAllRecipes([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 7, [FromQuery] string? filter = null)
         {
-            var result = await _mediatorHandler.Send(new GetAllRecipeQuery());
+            var query = new GetAllRecipeQuery(pageNumber, pageSize, filter);
+            var result = await _mediatorHandler.Send(query);
             return Response(result);
         }
 
@@ -58,6 +59,15 @@ namespace Project.WebApi.Controllers
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var result = await _mediatorHandler.Send(new DeleteRecipeCommand(id));
+            return Response(result);
+        }
+
+        [Authorize(Roles = "Admin, User")]
+        [HttpGet("TopProduced")]
+        [ProducesResponseType(typeof(GetTopProducedRecipesQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetTopProducedRecipes()
+        {
+            var result = await _mediatorHandler.Send(new GetTopProducedRecipesQuery());
             return Response(result);
         }
     }

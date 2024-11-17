@@ -1,5 +1,6 @@
 ﻿using Project.Domain.Interfaces.Data.Repositories;
 using Project.Domain.Notifications;
+using System.Linq;
 
 namespace Project.Application.Features.Queries.GetAllProduction
 {
@@ -7,20 +8,29 @@ namespace Project.Application.Features.Queries.GetAllProduction
     {
         private readonly IMediator _mediator;
         private readonly IProductionRepository _productionRepository;
-        private readonly IRecipeRepository _recipeRepository;
 
         public GetAllProductionQueryHandler(IMediator mediator, IProductionRepository productionRepository, IRecipeRepository recipeRepository)
         {
             _mediator = mediator;
             _productionRepository = productionRepository;
-            _recipeRepository = recipeRepository;
         }
 
         public async Task<GetAllProductionQueryResponse?> Handle(GetAllProductionQuery request, CancellationToken cancellationToken)
         {
-            var dbProductions = await _productionRepository.GetAllAsync();
+            var filteredProductions = _productionRepository.GetAllAsync().Result.AsQueryable();
+            if (!string.IsNullOrEmpty(request.Filter))
+            {
+                filteredProductions = filteredProductions.Where(p => p.Receita != null && p.Receita.Nome.Contains(request.Filter));
+            }
 
-            var productionDTOs = dbProductions.Select(dbProduction => new GetAllProductionDTO
+            var totalProductions = filteredProductions.Count();
+
+            var paginatedProductions = filteredProductions
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToList();
+
+            var productionDTOs = paginatedProductions.Select(dbProduction => new GetAllProductionDTO
             {
                 Id = dbProduction.Id,
                 ReceitaId = dbProduction.ReceitaId,
@@ -33,7 +43,11 @@ namespace Project.Application.Features.Queries.GetAllProduction
 
             return new GetAllProductionQueryResponse
             {
-                Productions = productionDTOs
+                Productions = productionDTOs,
+                TotalRecords = totalProductions,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize,
+                TotalPages = (int)Math.Ceiling(totalProductions / (double)request.PageSize)
             };
         }
     }

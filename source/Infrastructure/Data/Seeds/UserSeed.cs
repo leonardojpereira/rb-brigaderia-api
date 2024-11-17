@@ -12,6 +12,7 @@ internal class UserSeed : IEntityTypeConfiguration<User>
         builder.HasData(
             new User
             (
+                nome: "Admin",
                 username: "admin",
                 password: "admin123",
                 email: "admin@admin.com",
@@ -19,6 +20,7 @@ internal class UserSeed : IEntityTypeConfiguration<User>
             ),
             new User
             (
+                nome: "User",
                 username: "user",
                 password: "admin123",
                 email: "user@user.com",

@@ -17,47 +17,84 @@ namespace Project.Infrastructure.Data.Respositories
             _dbContext = dbContext;
         }
 
-        // Implementação do método GetAsync
+
         public async Task<Recipe?> GetAsync(Expression<Func<Recipe, bool>> predicate)
         {
             return await _dbContext.Recipe
-                .Include(r => r.Ingredientes) // Incluir os ingredientes
-                .ThenInclude(ri => ri.Ingredient) // Incluir detalhes do ingrediente
-                .FirstOrDefaultAsync(predicate);
+                .Include(r => r.Ingredientes)
+                .ThenInclude(ri => ri.Ingredient)
+                .FirstOrDefaultAsync(Expression.Lambda<Func<Recipe, bool>>(
+                    Expression.AndAlso(
+                        predicate.Body,
+                        Expression.Not(Expression.Property(predicate.Parameters[0], nameof(Recipe.IsDeleted)))
+                    ),
+                    predicate.Parameters
+                ));
+
         }
 
-        // Implementação do método AddAsync
         public async Task AddAsync(Recipe recipe)
         {
             await _dbContext.Recipe.AddAsync(recipe);
             await _dbContext.SaveChangesAsync();
         }
 
-        // Implementação do método GetAllAsync
         public async Task<IEnumerable<Recipe>> GetAllAsync()
         {
             return await _dbContext.Recipe
                 .Include(r => r.Ingredientes)
-                .ThenInclude(ri => ri.Ingredient) // Incluir os detalhes do ingrediente
+                .ThenInclude(ri => ri.Ingredient)
+                .Where(r => !r.IsDeleted)
                 .ToListAsync();
+
         }
 
-        // Implementação do método GetWithIngredientsAsync
+
         public async Task<Recipe?> GetWithIngredientsAsync(Guid recipeId)
         {
             return await _dbContext.Recipe
-                .Include(r => r.Ingredientes) 
-                .ThenInclude(ri => ri.Ingredient) 
-                .FirstOrDefaultAsync(r => r.Id == recipeId);
+                 .Include(r => r.Ingredientes)
+                .ThenInclude(ri => ri.Ingredient)
+                .FirstOrDefaultAsync(r => r.Id == recipeId && !r.IsDeleted);
         }
 
-        // Sobrescrevendo o método GetAll para incluir os ingredientes
         public override IEnumerable<Recipe> GetAll()
         {
             return _dbContext.Recipe
-                .Include(r => r.Ingredientes)
+                 .Include(r => r.Ingredientes)
                 .ThenInclude(ri => ri.Ingredient)
+                .Where(r => !r.IsDeleted)
                 .ToList();
         }
+
+        public async Task<(IEnumerable<Recipe> recipes, int totalItems)> GetPagedRecipesAsync(int pageNumber, int pageSize, string? filter)
+        {
+            var query = _dbContext.Recipe
+                .Include(r => r.Ingredientes)
+                .ThenInclude(ri => ri.Ingredient)
+                .Where(r => !r.IsDeleted)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(r => r.Nome.Contains(filter) || r.Descricao.Contains(filter));
+            }
+
+            var totalItems = await query.CountAsync();
+
+            var recipes = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (recipes, totalItems);
+        }
+
+        public void DeleteSoft(Recipe recipe)
+        {
+            recipe.IsDeleted = true;
+            _dbContext.Update(recipe);
+        }
+
     }
 }

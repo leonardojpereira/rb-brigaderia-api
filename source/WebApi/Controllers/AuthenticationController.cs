@@ -4,6 +4,8 @@ using Project.Application.Features.Commands.RegisterUser;
 using Project.Application.Features.Commands.LoginUser;
 using Project.Domain.Notifications;
 using Microsoft.AspNetCore.Authorization;
+using Project.Application.Features.Queries.GetAllUsers;
+using Project.Application.Features.Commands.DeleteUser;
 
 namespace Project.WebApi.Controllers
 {

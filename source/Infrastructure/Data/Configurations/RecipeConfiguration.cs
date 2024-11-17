@@ -21,10 +21,20 @@ namespace Project.Infrastructure.Data.Configurations
                 .HasColumnName("TX_NOME")
                 .IsRequired();
 
+            builder.Property(r => r.CreatedAt)
+           .HasColumnName("DT_CREATEDAT")
+           .IsRequired();
+
+            builder.Property(r => r.UpdatedAt)
+                    .HasColumnName("DT_UPDATEDAT");
+
+            builder.Property(r => r.IsDeleted)
+                    .HasColumnName("FL_DELETED")
+                    .IsRequired();
+
             builder.Property(r => r.Descricao)
                 .HasColumnName("TX_DESCRICAO");
 
-            // Relacionamento com RecipeIngredient (1 Recipe tem muitos RecipeIngredients)
             builder.HasMany(r => r.Ingredientes)
                 .WithOne(ri => ri.Recipe)
                 .HasForeignKey(ri => ri.RecipeId)
