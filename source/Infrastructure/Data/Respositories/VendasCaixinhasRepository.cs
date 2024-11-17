@@ -87,9 +87,27 @@ namespace Project.Infrastructure.Data.Repositories
                 .Select(g => new ValueTuple<int, decimal>(g.Key, g.Sum(v => v.Lucro)))
                 .ToListAsync(cancellationToken);
         }
+
+           public async Task<(decimal TotalCusto, decimal TotalLucro, int QuantidadeVendas)> GetMonthlySalesSummaryAsync(int year, int month, CancellationToken cancellationToken)
+        {
+            var summary = await _dbContext.VendasCaixinhas
+                .Where(v => v.DataVenda.Year == year && v.DataVenda.Month == month && !v.IsDeleted)
+                .GroupBy(v => 1) // Group by a constant to get aggregate values for the month
+                .Select(g => new
+                {
+                    TotalCusto = g.Sum(v => v.CustoTotal),
+                    TotalLucro = g.Sum(v => v.Lucro),
+                    QuantidadeVendas = g.Count()
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return summary != null
+                ? (summary.TotalCusto, summary.TotalLucro, summary.QuantidadeVendas)
+                : (0, 0, 0);
+        }
+    }
     }
 
-    
-}
+
 
 

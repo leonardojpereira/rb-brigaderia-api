@@ -23,5 +23,7 @@ namespace Project.Domain.Interfaces.Data.Repositories
         Task<IEnumerable<(int Month, decimal TotalSales)>> GetSalesGroupedByMonthAsync(int year, CancellationToken cancellationToken);
         Task<IEnumerable<(int Day, decimal TotalProfit)>> GetProfitGroupedByDayAsync(int year, int month, CancellationToken cancellationToken);
 
+        Task<(decimal TotalCusto, decimal TotalLucro, int QuantidadeVendas)> GetMonthlySalesSummaryAsync(int year, int month, CancellationToken cancellationToken);
+
     }
 }
