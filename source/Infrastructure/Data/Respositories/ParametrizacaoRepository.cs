@@ -27,4 +27,10 @@ public class ParametrizacaoRepository : RepositoryBase<Parametrizacao>, IParamet
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<Parametrizacao?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Parametrizacao
+            .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted, cancellationToken);
+    }
 }

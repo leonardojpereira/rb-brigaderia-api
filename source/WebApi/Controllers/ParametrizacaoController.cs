@@ -3,7 +3,7 @@ using Project.Domain.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Project.Application.Features.Commands.CreateParametrizacao;
 using Project.Application.Features.Queries.GetAllParametrizacao;
-// using Project.Application.Features.Queries.GetParametrizacaoById;
+using Project.Application.Features.Queries.GetParametrizacaoById;
 // using Project.Application.Features.Commands.UpdateParametrizacao;
 // using Project.Application.Features.Commands.DeleteParametrizacao;
 
@@ -35,13 +35,13 @@ public class ParametrizacaoController(INotificationHandler<DomainNotification> n
         return Response(await _mediatorHandler.Send(query));
     }
 
-    // [Authorize(Roles = "Admin, User")]
-    // [HttpGet("{id}")]
-    // [ProducesResponseType(typeof(GetParametrizacaoByIdQueryResponse), StatusCodes.Status200OK)]
-    // public async Task<IActionResult> GetParametrizacaoById([FromRoute] Guid id)
-    // {
-    //     return Response(await _mediatorHandler.Send(new GetParametrizacaoByIdQuery(id)));
-    // }
+    [Authorize(Roles = "Admin, User")]
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(GetParametrizacaoByIdQueryResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetParametrizacaoById([FromRoute] Guid id)
+    {
+        return Response(await _mediatorHandler.Send(new GetParametrizacaoByIdQuery(id)));
+    }
 
     // [Authorize(Roles = "Admin")]
     // [HttpPut("{id}")]

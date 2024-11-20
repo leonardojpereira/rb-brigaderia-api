@@ -8,4 +8,6 @@ public interface IParametrizacaoRepository : IRepositoryBase<Parametrizacao>
 {
     Task<Parametrizacao?> GetByNameAsync(string nomeVendedor, CancellationToken cancellationToken);
     Task<IEnumerable<Parametrizacao>> GetAllAsync(CancellationToken cancellationToken);
+
+    Task<Parametrizacao?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }
