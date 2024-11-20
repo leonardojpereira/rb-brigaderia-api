@@ -18,6 +18,7 @@ public interface IApplicationDbContext
 
     public DbSet<VendasCaixinhas> VendasCaixinhas { get; set; }
 
+    public DbSet<Parametrizacao> Parametrizacao { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

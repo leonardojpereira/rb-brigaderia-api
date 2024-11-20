@@ -20,6 +20,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<VendasCaixinhas> VendasCaixinhas { get; set; }
 
+    public DbSet<Parametrizacao> Parametrizacao { get; set; }
+
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
