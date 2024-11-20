@@ -30,6 +30,7 @@ public class GetParametrizacaoByIdQueryHandler : IRequestHandler<GetParametrizac
         {
             Id = parametrizacao.Id,
             NomeVendedor = parametrizacao.NomeVendedor,
+            PrecoCaixinha = parametrizacao.PrecoCaixinha,
             Custo = parametrizacao.Custo,
             Lucro = parametrizacao.Lucro,
             LocalVenda = parametrizacao.LocalVenda,

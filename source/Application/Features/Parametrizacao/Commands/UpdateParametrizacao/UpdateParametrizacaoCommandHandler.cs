@@ -32,6 +32,7 @@ public class UpdateParametrizacaoCommandHandler : IRequestHandler<UpdateParametr
         }
 
         parametrizacao.NomeVendedor = request.Request.NomeVendedor ?? parametrizacao.NomeVendedor;
+        parametrizacao.PrecoCaixinha = request.Request.PrecoCaixinha ?? parametrizacao.PrecoCaixinha;
         parametrizacao.Custo = request.Request.Custo ?? parametrizacao.Custo;
         parametrizacao.Lucro = request.Request.Lucro ?? parametrizacao.Lucro;
         parametrizacao.LocalVenda = request.Request.LocalVenda ?? parametrizacao.LocalVenda;
@@ -47,6 +48,7 @@ public class UpdateParametrizacaoCommandHandler : IRequestHandler<UpdateParametr
         {
             Id = updatedParametrizacao.Id,
             NomeVendedor = updatedParametrizacao.NomeVendedor,
+            PrecoCaixinha = updatedParametrizacao.PrecoCaixinha,
             Custo = updatedParametrizacao.Custo,
             Lucro = updatedParametrizacao.Lucro,
             LocalVenda = updatedParametrizacao.LocalVenda,

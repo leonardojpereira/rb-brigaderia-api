@@ -39,6 +39,7 @@ public class GetAllParametrizacaoQueryHandler : IRequestHandler<GetAllParametriz
             {
                 Id = p.Id,
                 NomeVendedor = p.NomeVendedor,
+                PrecoCaixinha = p.PrecoCaixinha,
                 Custo = p.Custo,
                 Lucro = p.Lucro,
                 LocalVenda = p.LocalVenda,

@@ -26,6 +26,7 @@ public class CreateParametrizacaoCommandHandler : IRequestHandler<CreateParametr
         var parametrizacao = new Parametrizacao
         {
             NomeVendedor = request.Request.NomeVendedor,
+            PrecoCaixinha = request.Request.PrecoCaixinha,
             Custo = request.Request.Custo,
             Lucro = request.Request.Lucro,
             LocalVenda = request.Request.LocalVenda,

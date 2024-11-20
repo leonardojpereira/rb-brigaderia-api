@@ -11,6 +11,10 @@ public class CreateParametrizacaoCommandValidator : AbstractValidator<CreatePara
             .MaximumLength(100).WithMessage("{PropertyName} não pode ter mais que 100 caracteres.")
             .When(x => x.Request != null);
 
+        RuleFor(x => x.Request.PrecoCaixinha)
+            .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} não pode ser negativo.")
+            .When(x => x.Request != null);
+
         RuleFor(x => x.Request.Custo)
             .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} não pode ser negativo.")
             .When(x => x.Request != null);
