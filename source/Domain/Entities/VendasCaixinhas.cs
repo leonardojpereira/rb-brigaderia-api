@@ -3,6 +3,7 @@
     public class VendasCaixinhas : BaseEntity
     {
         public DateTime DataVenda { get; set; }
+        public string NomeVendedor { get; set; } = string.Empty;
         public int QuantidadeCaixinhas { get; set; }
         public decimal PrecoTotalVenda { get; set; }
         public decimal Salario { get; set; }
