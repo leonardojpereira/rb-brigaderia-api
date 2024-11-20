@@ -5,7 +5,7 @@ using Project.Application.Features.Commands.CreateParametrizacao;
 using Project.Application.Features.Queries.GetAllParametrizacao;
 using Project.Application.Features.Queries.GetParametrizacaoById;
 using Project.Application.Features.Commands.UpdateParametrizacao;
-// using Project.Application.Features.Commands.DeleteParametrizacao;
+using Project.Application.Features.Commands.DeleteParametrizacao;
 
 namespace Project.WebApi.Controllers;
 
@@ -52,11 +52,11 @@ public class ParametrizacaoController(INotificationHandler<DomainNotification> n
         return Response(await _mediatorHandler.Send(command));
     }
 
-    // [Authorize(Roles = "Admin")]
-    // [HttpDelete("{id}")]
-    // [ProducesResponseType(typeof(DeleteParametrizacaoCommandResponse), StatusCodes.Status200OK)]
-    // public async Task<IActionResult> DeleteParametrizacao([FromRoute] Guid id)
-    // {
-    //     return Response(await _mediatorHandler.Send(new DeleteParametrizacaoCommand(id)));
-    // }
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(DeleteParametrizacaoCommandResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> DeleteParametrizacao([FromRoute] Guid id)
+    {
+        return Response(await _mediatorHandler.Send(new DeleteParametrizacaoCommand(id)));
+    }
 }

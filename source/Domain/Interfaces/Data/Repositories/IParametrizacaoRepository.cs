@@ -10,4 +10,7 @@ public interface IParametrizacaoRepository : IRepositoryBase<Parametrizacao>
     Task<IEnumerable<Parametrizacao>> GetAllAsync(CancellationToken cancellationToken);
 
     Task<Parametrizacao?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+
+    void DeleteSoft(Parametrizacao parametrizacao);
+
 }

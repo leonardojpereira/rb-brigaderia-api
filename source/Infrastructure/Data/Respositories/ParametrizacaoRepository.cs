@@ -33,4 +33,10 @@ public class ParametrizacaoRepository : RepositoryBase<Parametrizacao>, IParamet
         return await _dbContext.Parametrizacao
             .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted, cancellationToken);
     }
+
+    public void DeleteSoft(Parametrizacao parametrizacao)
+    {
+        parametrizacao.IsDeleted = true;
+        _dbContext.Parametrizacao.Update(parametrizacao);
+    }
 }
