@@ -48,5 +48,14 @@ internal class ParametrizacaoConfiguration : IEntityTypeConfiguration<Parametriz
                      .HasColumnName("TM_HORARIO_FIM")
                      .HasMaxLength(8)
                      .IsRequired();
+
+              builder.Property(p => p.PrecoPassagem)
+                     .HasColumnName("NR_PRECO_PASSAGEM")
+                     .HasColumnType("decimal(18,2)")
+                     .IsRequired(false); 
+
+              builder.Property(p => p.PrecisaPassagem)
+                     .HasColumnName("BL_PRECISA_PASSAGEM")
+                     .IsRequired(); 
        }
 }
