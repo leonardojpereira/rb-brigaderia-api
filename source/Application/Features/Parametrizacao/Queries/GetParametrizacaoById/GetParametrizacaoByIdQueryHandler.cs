@@ -35,7 +35,9 @@ public class GetParametrizacaoByIdQueryHandler : IRequestHandler<GetParametrizac
             Lucro = parametrizacao.Lucro,
             LocalVenda = parametrizacao.LocalVenda,
             HorarioInicio = parametrizacao.HorarioInicio,
-            HorarioFim = parametrizacao.HorarioFim
+            HorarioFim = parametrizacao.HorarioFim,
+            PrecisaPassagem = parametrizacao.PrecisaPassagem,
+            PrecoPassagem = parametrizacao.PrecoPassagem
         };
 
         return new GetParametrizacaoByIdQueryResponse { Parametrizacao = parametrizacaoDTO };

@@ -9,4 +9,8 @@ public record UpdateParametrizacaoCommandRequest
     public string? LocalVenda { get; set; }
     public string? HorarioInicio { get; set; }
     public string? HorarioFim { get; set; }
+
+    public bool PrecisaPassagem { get; set; }
+
+    public decimal? PrecoPassagem { get; set; }
 }

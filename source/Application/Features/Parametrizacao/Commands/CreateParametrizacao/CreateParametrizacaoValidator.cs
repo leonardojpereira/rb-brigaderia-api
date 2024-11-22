@@ -37,5 +37,13 @@ public class CreateParametrizacaoCommandValidator : AbstractValidator<CreatePara
             .GreaterThan(x => x.Request.HorarioInicio)
             .WithMessage("{PropertyName} deve ser maior que o Horário de Início.")
             .When(x => x.Request != null);
+
+        RuleFor(x => x.Request.PrecisaPassagem)
+            .NotNull().WithMessage("{PropertyName} é obrigatório.")
+            .When(x => x.Request != null);
+
+        RuleFor(x => x.Request.PrecoPassagem)
+            .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} não pode ser negativo.")
+            .When(x => x.Request != null && x.Request.PrecisaPassagem == true);
     }
 }

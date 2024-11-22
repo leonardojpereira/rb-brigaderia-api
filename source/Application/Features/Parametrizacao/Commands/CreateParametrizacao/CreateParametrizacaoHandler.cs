@@ -31,7 +31,9 @@ public class CreateParametrizacaoCommandHandler : IRequestHandler<CreateParametr
             Lucro = request.Request.Lucro,
             LocalVenda = request.Request.LocalVenda,
             HorarioInicio = request.Request.HorarioInicio,
-            HorarioFim = request.Request.HorarioFim
+            HorarioFim = request.Request.HorarioFim,
+            PrecisaPassagem = request.Request.PrecisaPassagem,
+            PrecoPassagem = request.Request.PrecoPassagem
         };
 
         _parametrizacaoRepository.Add(parametrizacao);

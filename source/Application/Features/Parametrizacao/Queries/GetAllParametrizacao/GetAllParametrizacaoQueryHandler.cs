@@ -44,7 +44,9 @@ public class GetAllParametrizacaoQueryHandler : IRequestHandler<GetAllParametriz
                 Lucro = p.Lucro,
                 LocalVenda = p.LocalVenda,
                 HorarioInicio = p.HorarioInicio,
-                HorarioFim = p.HorarioFim
+                HorarioFim = p.HorarioFim,
+                PrecisaPassagem = p.PrecisaPassagem,
+                PrecoPassagem = p.PrecoPassagem
             })
             .ToList();
 
