@@ -1,28 +1,21 @@
 using FluentValidation;
 
-namespace Project.Application.Features.Commands.CreateVendasCaixinhas;
+namespace Project.Application.Features.Commands.CreateParametrizacao;
 
-public class CreateVendasCaixinhasCommandValidator : AbstractValidator<CreateVendasCaixinhasCommand>
+public class CreateParametrizacaoCommandValidator : AbstractValidator<CreateParametrizacaoCommand>
 {
-    public CreateVendasCaixinhasCommandValidator()
+    public CreateParametrizacaoCommandValidator()
     {
-        RuleFor(x => x.Request.DataVenda)
+        RuleFor(x => x.Request.NomeVendedor)
             .NotEmpty().WithMessage("{PropertyName} é obrigatório.")
+            .MaximumLength(100).WithMessage("{PropertyName} não pode ter mais que 100 caracteres.")
             .When(x => x.Request != null);
 
-        RuleFor(x => x.Request.QuantidadeCaixinhas)
-            .GreaterThan(0).WithMessage("A {PropertyName} deve ser maior que zero.")
-            .When(x => x.Request != null);
-
-        RuleFor(x => x.Request.PrecoTotalVenda)
-            .GreaterThan(0).WithMessage("O {PropertyName} deve ser maior que zero.")
-            .When(x => x.Request != null);
-
-        RuleFor(x => x.Request.Salario)
+        RuleFor(x => x.Request.PrecoCaixinha)
             .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} não pode ser negativo.")
             .When(x => x.Request != null);
 
-        RuleFor(x => x.Request.CustoTotal)
+        RuleFor(x => x.Request.Custo)
             .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} não pode ser negativo.")
             .When(x => x.Request != null);
 
@@ -45,9 +38,12 @@ public class CreateVendasCaixinhasCommandValidator : AbstractValidator<CreateVen
             .WithMessage("{PropertyName} deve ser maior que o Horário de Início.")
             .When(x => x.Request != null);
 
-        RuleFor(x => x.Request.NomeVendedor)
-            .NotEmpty().WithMessage("{PropertyName} é obrigatório.")
-            .MaximumLength(100).WithMessage("{PropertyName} não pode ter mais que 100 caracteres.")
+        RuleFor(x => x.Request.PrecisaPassagem)
+            .NotNull().WithMessage("{PropertyName} é obrigatório.")
             .When(x => x.Request != null);
+
+        RuleFor(x => x.Request.PrecoPassagem)
+            .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} não pode ser negativo.")
+            .When(x => x.Request != null && x.Request.PrecisaPassagem == true);
     }
 }

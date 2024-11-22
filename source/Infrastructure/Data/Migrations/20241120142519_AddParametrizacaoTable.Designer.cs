@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Project.Infrastructure.Data;
 namespace Project.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241120142519_AddParametrizacaoTable")]
+    partial class AddParametrizacaoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,18 +114,6 @@ namespace Project.Infrastructure.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("TX_NOME_VENDEDOR");
-
-                    b.Property<bool>("PrecisaPassagem")
-                        .HasColumnType("bit")
-                        .HasColumnName("BL_PRECISA_PASSAGEM");
-
-                    b.Property<decimal>("PrecoCaixinha")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NR_PRECO_CAIXINHA");
-
-                    b.Property<decimal?>("PrecoPassagem")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NR_PRECO_PASSAGEM");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -252,14 +243,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-                            CreatedAt = new DateTime(2024, 11, 21, 23, 1, 49, 984, DateTimeKind.Utc).AddTicks(8020),
+                            CreatedAt = new DateTime(2024, 11, 20, 14, 25, 18, 341, DateTimeKind.Utc).AddTicks(4632),
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-                            CreatedAt = new DateTime(2024, 11, 21, 23, 1, 49, 984, DateTimeKind.Utc).AddTicks(8026),
+                            CreatedAt = new DateTime(2024, 11, 20, 14, 25, 18, 341, DateTimeKind.Utc).AddTicks(4636),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -358,10 +349,10 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f3723404-978a-43aa-9c9b-03c4b375cac2"),
-                            CreatedAt = new DateTime(2024, 11, 21, 23, 1, 49, 984, DateTimeKind.Utc).AddTicks(8448),
+                            Id = new Guid("bebafc02-0368-464e-8664-c2079d463777"),
+                            CreatedAt = new DateTime(2024, 11, 20, 14, 25, 18, 341, DateTimeKind.Utc).AddTicks(4843),
                             Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$61O0Py/fhAgJoZ095rcKLugDSJiphagxJXgprTTynEEdTPGEKJ23W",
+                            HashedPassword = "$2a$11$vbKwAX4mpirmqIcUg1pwReGGQ3/sC0QZRoI6pvhfiCvjvX81u5TEC",
                             IsDeleted = false,
                             Nome = "Admin",
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
@@ -369,10 +360,10 @@ namespace Project.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bf6c4559-1ebc-4920-b2cc-fb86fdfb52f8"),
-                            CreatedAt = new DateTime(2024, 11, 21, 23, 1, 50, 143, DateTimeKind.Utc).AddTicks(1419),
+                            Id = new Guid("092e3da9-1df1-4c18-93d2-b5d2684942fd"),
+                            CreatedAt = new DateTime(2024, 11, 20, 14, 25, 18, 469, DateTimeKind.Utc).AddTicks(3183),
                             Email = "user@user.com",
-                            HashedPassword = "$2a$11$1y4NASXyRBtFDGPuQO8Sme3/m5xIfl2SBITqvubfZk/fQEHtiqioG",
+                            HashedPassword = "$2a$11$1uaUfq6gTCZm51QGNhm2YOsvwNdtpzBk0nk9YGt4vUSXGLb0DD7LK",
                             IsDeleted = false,
                             Nome = "User",
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),

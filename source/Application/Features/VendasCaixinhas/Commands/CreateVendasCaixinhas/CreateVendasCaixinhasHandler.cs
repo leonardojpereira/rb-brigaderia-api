@@ -33,7 +33,8 @@ public class CreateVendasCaixinhasCommandHandler : IRequestHandler<CreateVendasC
             Lucro = request.Request.Lucro,
             LocalVenda = request.Request.LocalVenda,
             HorarioInicio = request.Request.HorarioInicio,
-            HorarioFim = request.Request.HorarioFim
+            HorarioFim = request.Request.HorarioFim,
+            NomeVendedor = request.Request.NomeVendedor
         };
 
         _vendasCaixinhasRepository.Add(vendasCaixinhas);

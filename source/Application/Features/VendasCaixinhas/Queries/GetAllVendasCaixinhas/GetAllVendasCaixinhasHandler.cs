@@ -22,8 +22,11 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
             {
                 allVendas = allVendas.Where(v => v.DataVenda.Date == request.Date.Value.Date).ToList();
             }
+            if (request.NomeVendedor != "")
+            {
+                allVendas = allVendas.Where(v => v.NomeVendedor == request.NomeVendedor).ToList();
+            }
 
-            // Ordenar as vendas por DataVenda em ordem decrescente
             var orderedVendas = allVendas.OrderByDescending(v => v.DataVenda).ToList();
 
             var totalVendas = orderedVendas.Count();
@@ -45,7 +48,8 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
                     Lucro = venda.Lucro,
                     LocalVenda = venda.LocalVenda,
                     HorarioInicio = venda.HorarioInicio,
-                    HorarioFim = venda.HorarioFim
+                    HorarioFim = venda.HorarioFim,
+                    NomeVendedor = venda.NomeVendedor
                 })
                 .ToList();
 

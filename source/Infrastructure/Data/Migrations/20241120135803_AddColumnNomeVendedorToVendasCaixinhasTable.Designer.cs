@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Project.Infrastructure.Data;
 namespace Project.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241120135803_AddColumnNomeVendedorToVendasCaixinhasTable")]
+    partial class AddColumnNomeVendedorToVendasCaixinhasTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,70 +69,6 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("T_INGREDIENT", (string)null);
-                });
-
-            modelBuilder.Entity("Project.Domain.Entities.Parametrizacao", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("PK_ID_PARAMETRIZACAO");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Custo")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NR_CUSTO");
-
-                    b.Property<string>("HorarioFim")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)")
-                        .HasColumnName("TM_HORARIO_FIM");
-
-                    b.Property<string>("HorarioInicio")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)")
-                        .HasColumnName("TM_HORARIO_INICIO");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LocalVenda")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TX_LOCAL_VENDA");
-
-                    b.Property<decimal>("Lucro")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NR_LUCRO");
-
-                    b.Property<string>("NomeVendedor")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("TX_NOME_VENDEDOR");
-
-                    b.Property<bool>("PrecisaPassagem")
-                        .HasColumnType("bit")
-                        .HasColumnName("BL_PRECISA_PASSAGEM");
-
-                    b.Property<decimal>("PrecoCaixinha")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NR_PRECO_CAIXINHA");
-
-                    b.Property<decimal?>("PrecoPassagem")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NR_PRECO_PASSAGEM");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("T_PARAMETRIZACAO", (string)null);
                 });
 
             modelBuilder.Entity("Project.Domain.Entities.Production", b =>
@@ -252,14 +191,14 @@ namespace Project.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
-                            CreatedAt = new DateTime(2024, 11, 21, 23, 1, 49, 984, DateTimeKind.Utc).AddTicks(8020),
+                            CreatedAt = new DateTime(2024, 11, 20, 13, 58, 2, 917, DateTimeKind.Utc).AddTicks(9786),
                             IsDeleted = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),
-                            CreatedAt = new DateTime(2024, 11, 21, 23, 1, 49, 984, DateTimeKind.Utc).AddTicks(8026),
+                            CreatedAt = new DateTime(2024, 11, 20, 13, 58, 2, 917, DateTimeKind.Utc).AddTicks(9790),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -358,10 +297,10 @@ namespace Project.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f3723404-978a-43aa-9c9b-03c4b375cac2"),
-                            CreatedAt = new DateTime(2024, 11, 21, 23, 1, 49, 984, DateTimeKind.Utc).AddTicks(8448),
+                            Id = new Guid("a9bf5f22-1e02-4fc6-b7cb-86b7b34c8fcb"),
+                            CreatedAt = new DateTime(2024, 11, 20, 13, 58, 2, 918, DateTimeKind.Utc).AddTicks(12),
                             Email = "admin@admin.com",
-                            HashedPassword = "$2a$11$61O0Py/fhAgJoZ095rcKLugDSJiphagxJXgprTTynEEdTPGEKJ23W",
+                            HashedPassword = "$2a$11$oOuMOTb2jV65B98BkhO.X.qfWRB7Mi9ni.Gluj.HADbwBgRoudYqu",
                             IsDeleted = false,
                             Nome = "Admin",
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9a"),
@@ -369,10 +308,10 @@ namespace Project.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bf6c4559-1ebc-4920-b2cc-fb86fdfb52f8"),
-                            CreatedAt = new DateTime(2024, 11, 21, 23, 1, 50, 143, DateTimeKind.Utc).AddTicks(1419),
+                            Id = new Guid("abe6897c-8c60-4b4c-9b7e-d6ccdb42f0fc"),
+                            CreatedAt = new DateTime(2024, 11, 20, 13, 58, 3, 66, DateTimeKind.Utc).AddTicks(5755),
                             Email = "user@user.com",
-                            HashedPassword = "$2a$11$1y4NASXyRBtFDGPuQO8Sme3/m5xIfl2SBITqvubfZk/fQEHtiqioG",
+                            HashedPassword = "$2a$11$tSXgltYl2.tQtetEw8VAoOmKcJ8WG7pUloD/WzSTG3rJKUkXf9kmy",
                             IsDeleted = false,
                             Nome = "User",
                             RoleId = new Guid("f7d4d7a9-4d1e-4a8d-9a8e-9b9a9b9a9b9b"),

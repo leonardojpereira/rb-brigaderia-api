@@ -11,5 +11,8 @@ namespace Project.Application.Features.Commands.UpdateVendasCaixinhas
         public string? LocalVenda { get; set; }
         public string? HorarioInicio { get; set; }
         public string? HorarioFim { get; set; }
+
+        public string? NomeVendedor { get; set; }
+    
     }
 }
