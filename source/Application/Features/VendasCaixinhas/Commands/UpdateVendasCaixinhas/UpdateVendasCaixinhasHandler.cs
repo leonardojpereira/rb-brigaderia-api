@@ -40,6 +40,7 @@ namespace Project.Application.Features.Commands.UpdateVendasCaixinhas
             vendaCaixinhas.LocalVenda = request.Request.LocalVenda ?? vendaCaixinhas.LocalVenda;
             vendaCaixinhas.HorarioInicio = request.Request.HorarioInicio ?? vendaCaixinhas.HorarioInicio;
             vendaCaixinhas.HorarioFim = request.Request.HorarioFim ?? vendaCaixinhas.HorarioFim;
+            vendaCaixinhas.NomeVendedor = request.Request.NomeVendedor ?? vendaCaixinhas.NomeVendedor;
 
             var updateResult = _vendasCaixinhasRepository.Update(vendaCaixinhas);
             _unitOfWork.Commit();
@@ -57,7 +58,8 @@ namespace Project.Application.Features.Commands.UpdateVendasCaixinhas
                 Lucro = updateResult.Lucro,
                 LocalVenda = updateResult.LocalVenda,
                 HorarioInicio = updateResult.HorarioInicio,
-                HorarioFim = updateResult.HorarioFim
+                HorarioFim = updateResult.HorarioFim,
+                NomeVendedor = updateResult.NomeVendedor
             };
         }
     }

@@ -37,7 +37,8 @@ namespace Project.Application.Features.Queries.GetVendasCaixinhasById
                 Lucro = vendaCaixinhas.Lucro,
                 LocalVenda = vendaCaixinhas.LocalVenda,
                 HorarioInicio = vendaCaixinhas.HorarioInicio,
-                HorarioFim = vendaCaixinhas.HorarioFim
+                HorarioFim = vendaCaixinhas.HorarioFim,
+                NomeVendedor = vendaCaixinhas.NomeVendedor
             };
 
             return new GetVendasCaixinhasByIdQueryResponse { VendaCaixinhas = vendaCaixinhasDTO };

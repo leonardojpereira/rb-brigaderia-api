@@ -44,5 +44,10 @@ public class CreateVendasCaixinhasCommandValidator : AbstractValidator<CreateVen
             .GreaterThan(x => x.Request.HorarioInicio)
             .WithMessage("{PropertyName} deve ser maior que o Horário de Início.")
             .When(x => x.Request != null);
+
+        RuleFor(x => x.Request.NomeVendedor)
+            .NotEmpty().WithMessage("{PropertyName} é obrigatório.")
+            .MaximumLength(100).WithMessage("{PropertyName} não pode ter mais que 100 caracteres.")
+            .When(x => x.Request != null);
     }
 }
