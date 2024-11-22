@@ -25,6 +25,12 @@ namespace Project.Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(v => v.DataVenda.Date == dataVenda.Date, cancellationToken);
         }
 
+        public async Task<VendasCaixinhas?> GetByNomeVendedorAsync(string nomeVendedor, CancellationToken cancellationToken)
+        {
+            return await _dbContext.VendasCaixinhas
+                .FirstOrDefaultAsync(v => v.NomeVendedor == nomeVendedor, cancellationToken);
+        }
+
         public async Task<decimal> GetMonthlyProfitAsync(int month, int year, CancellationToken cancellationToken)
         {
             return await _dbContext.VendasCaixinhas
@@ -92,7 +98,7 @@ namespace Project.Infrastructure.Data.Repositories
         {
             var summary = await _dbContext.VendasCaixinhas
                 .Where(v => v.DataVenda.Year == year && v.DataVenda.Month == month && !v.IsDeleted)
-                .GroupBy(v => 1) // Group by a constant to get aggregate values for the month
+                .GroupBy(v => 1) 
                 .Select(g => new
                 {
                     TotalCusto = g.Sum(v => v.CustoTotal),

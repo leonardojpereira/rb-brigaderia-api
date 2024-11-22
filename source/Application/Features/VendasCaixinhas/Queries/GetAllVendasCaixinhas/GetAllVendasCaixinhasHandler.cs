@@ -22,6 +22,10 @@ namespace Project.Application.Features.Queries.GetAllVendasCaixinhas
             {
                 allVendas = allVendas.Where(v => v.DataVenda.Date == request.Date.Value.Date).ToList();
             }
+            if (request.NomeVendedor != "")
+            {
+                allVendas = allVendas.Where(v => v.NomeVendedor == request.NomeVendedor).ToList();
+            }
 
             var orderedVendas = allVendas.OrderByDescending(v => v.DataVenda).ToList();
 

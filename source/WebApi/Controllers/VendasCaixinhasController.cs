@@ -30,9 +30,11 @@ namespace Project.WebApi.Controllers
         public async Task<IActionResult> GetAllVendasCaixinhas(
         [FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 7,
-        [FromQuery] DateTime? date = null)
+        [FromQuery] DateTime? date = null,
+        [FromQuery] string nomeVendedor = "")
+        
         {
-            var query = new GetAllVendasCaixinhasQuery(pageNumber, pageSize, date);
+            var query = new GetAllVendasCaixinhasQuery(pageNumber, pageSize, date, nomeVendedor);
             return Response(await _mediatorHandler.Send(query));
         }
 

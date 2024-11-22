@@ -9,6 +9,8 @@ namespace Project.Domain.Interfaces.Data.Repositories
     public interface IVendasCaixinhasRepository : IRepositoryBase<VendasCaixinhas>
     {
         Task<VendasCaixinhas?> GetByDateAsync(DateTime dataVenda, CancellationToken cancellationToken);
+
+        Task<VendasCaixinhas?> GetByNomeVendedorAsync(string nomeVendedor, CancellationToken cancellationToken);
         Task<decimal> GetMonthlyProfitAsync(int month, int year, CancellationToken cancellationToken);
 
         Task<IEnumerable<VendasCaixinhas>> GetAllAsync(CancellationToken cancellationToken);
