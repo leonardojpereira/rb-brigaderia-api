@@ -23,7 +23,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Delet
 
         if (user is null)
         {
-            await _mediator.Publish(new DomainNotification("DeleteUser", "User not found"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("DeleteUser", "Usuário não encontrado"), cancellationToken);
             return default;
         }
 
@@ -32,12 +32,12 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Delet
             _userRepository.Delete(user);
              _unitOfWork.Commit();
 
-            await _mediator.Publish(new DomainSuccessNotification("DeleteUser", "User deleted successfully"), cancellationToken);
+            await _mediator.Publish(new DomainSuccessNotification("DeleteUser", "Usuário deletado com sucesso!"), cancellationToken);
             return new DeleteUserCommandResponse();
         }
         catch (Exception ex)
         {
-            await _mediator.Publish(new DomainNotification("DeleteUser", $"An error occurred: {ex.Message}"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("DeleteUser", $"Ocorreu um erro: {ex.Message}"), cancellationToken);
             return default;
         }
     }

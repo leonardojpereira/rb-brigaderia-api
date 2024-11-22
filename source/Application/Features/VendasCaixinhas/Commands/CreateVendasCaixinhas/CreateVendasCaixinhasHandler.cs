@@ -40,7 +40,7 @@ public class CreateVendasCaixinhasCommandHandler : IRequestHandler<CreateVendasC
         _vendasCaixinhasRepository.Add(vendasCaixinhas);
          _unitOfWork.Commit();
 
-        await _mediator.Publish(new DomainSuccessNotification("CreateVendasCaixinhas", "Venda de caixinhas registrada com sucesso!"), cancellationToken);
+        await _mediator.Publish(new DomainSuccessNotification("CreateVendasCaixinhas", "Venda registrada com sucesso!"), cancellationToken);
 
         return new CreateVendasCaixinhasCommandResponse
         {

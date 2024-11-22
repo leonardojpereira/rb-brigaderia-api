@@ -23,7 +23,7 @@ namespace Project.Application.Features.Commands.UpdateUser
 
             if (dbUser is null)
             {
-                await _mediator.Publish(new DomainNotification("UpdateUser", "User not found"), cancellationToken);
+                await _mediator.Publish(new DomainNotification("UpdateUser", "Usuário não encontrado."), cancellationToken);
                 return default;
             }
 
@@ -34,7 +34,7 @@ namespace Project.Application.Features.Commands.UpdateUser
             var updateResult = _userRepository.Update(dbUser);
             _unitOfWork.Commit();
 
-            await _mediator.Publish(new DomainSuccessNotification("UpdateUser", "User updated successfully"), cancellationToken);
+            await _mediator.Publish(new DomainSuccessNotification("UpdateUser", "Usuário atualizado com sucesso!"), cancellationToken);
 
             return new UpdateUserCommandResponse
             {

@@ -32,7 +32,7 @@ public class CreateProductionCommandHandler : IRequestHandler<CreateProductionCo
         var recipe = await _recipeRepository.GetWithIngredientsAsync(request.Request.ReceitaId);
         if (recipe == null)
         {
-            await _mediator.Publish(new DomainNotification("CreateProduction", "Recipe not found"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("CreateProduction", "Receita não encontrada"), cancellationToken);
             return null;
         }
 
@@ -53,7 +53,7 @@ public class CreateProductionCommandHandler : IRequestHandler<CreateProductionCo
             var ingrediente = await _ingredientRepository.GetAsync(i => i.Id == ingredienteReceita.IngredienteId);
             if (ingrediente == null)
             {
-                errorMessages.Add($"Ingredient with ID {ingredienteReceita.IngredienteId} not found");
+                errorMessages.Add($"Ingrediente com o Id {ingredienteReceita.IngredienteId} não encontrado");
                 continue;
             }
 
@@ -61,7 +61,7 @@ public class CreateProductionCommandHandler : IRequestHandler<CreateProductionCo
 
             if (ingrediente.Stock < quantidadeDescontada)
             {
-                errorMessages.Add($"Insufficient stock for ingredient {ingrediente.Name}");
+                errorMessages.Add($"Estoque insuficiente para {ingrediente.Name}");
                 continue;
             }
 
@@ -79,7 +79,7 @@ public class CreateProductionCommandHandler : IRequestHandler<CreateProductionCo
 
         _unitOfWork.Commit();
 
-        await _mediator.Publish(new DomainSuccessNotification("CreateProduction", "Production created successfully and stock updated"), cancellationToken);
+        await _mediator.Publish(new DomainSuccessNotification("CreateProduction", "Produção cadastrada com sucesso e estoque atualizado."), cancellationToken);
 
         return new CreateProductionCommandResponse
         {

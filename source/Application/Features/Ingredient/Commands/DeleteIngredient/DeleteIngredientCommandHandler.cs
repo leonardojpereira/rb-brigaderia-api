@@ -23,14 +23,14 @@ public class DeleteIngredientCommandHandler : IRequestHandler<DeleteIngredientCo
 
     if (ingredient is null)
     {
-        await _mediator.Publish(new DomainNotification("DeleteIngredient", "Ingredient not found"), cancellationToken);
+        await _mediator.Publish(new DomainNotification("DeleteIngredient", "Produto não encontrado"), cancellationToken);
         return default;
     }
 
     _ingredientRepository.DeleteSoft(ingredient);
     _unitOfWork.Commit();
 
-    await _mediator.Publish(new DomainSuccessNotification("DeleteIngredient", "Ingredient marked as deleted successfully"), cancellationToken);
+    await _mediator.Publish(new DomainSuccessNotification("DeleteIngredient", "Produto deletado com sucesso"), cancellationToken);
     return new DeleteIngredientCommandResponse();
 }
 

@@ -19,7 +19,7 @@ public class LoginUserCommandHandler(IUserRepository userRepository, ITokenServi
 
         if (user == null || !user.VerifyPassword(request.Request.Password))
         {
-            await _mediator.Publish(new DomainNotification("LoginUser", "Invalid username or password"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("LoginUser", "Usuário não encontrado. Por favor, tente novamente."), cancellationToken);
             return default;
         }
 
