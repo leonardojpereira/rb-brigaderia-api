@@ -26,7 +26,7 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, C
 
         if (existingRecipe is not null)
         {
-            await _mediator.Publish(new DomainNotification("CreateRecipe", "Recipe already exists"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("CreateRecipe", "Receita já existe"), cancellationToken);
             return default;
         }
 
@@ -61,7 +61,7 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, C
             }).ToList()
         };
 
-        await _mediator.Publish(new DomainSuccessNotification("CreateRecipe", "Recipe created successfully"), cancellationToken);
+        await _mediator.Publish(new DomainSuccessNotification("CreateRecipe", "Receita cadastrada com sucesso!"), cancellationToken);
 
         return response;
     }

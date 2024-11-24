@@ -32,7 +32,7 @@ public class UpdateRecipeCommandHandler : IRequestHandler<UpdateRecipeCommand, U
         var dbRecipe = await _recipeRepository.GetAsync(recipe => recipe.Id == request.Id);
         if (dbRecipe == null)
         {
-            await _mediator.Publish(new DomainNotification("UpdateRecipe", "Recipe not found"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("UpdateRecipe", "Receita não encontrada"), cancellationToken);
             return null;
         }
 
@@ -52,7 +52,7 @@ public class UpdateRecipeCommandHandler : IRequestHandler<UpdateRecipeCommand, U
             var ingrediente = await _ingredientRepository.GetAsync(ing => ing.Id == newIngredient.IngredienteId);
             if (ingrediente == null)
             {
-                await _mediator.Publish(new DomainNotification("UpdateRecipe", $"Ingredient with ID {newIngredient.IngredienteId} not found"), cancellationToken);
+                await _mediator.Publish(new DomainNotification("UpdateRecipe", $"Ingrediente com o Id {newIngredient.IngredienteId} não encontrado"), cancellationToken);
                 return null;
             }
 
@@ -69,7 +69,7 @@ public class UpdateRecipeCommandHandler : IRequestHandler<UpdateRecipeCommand, U
         _recipeRepository.Update(dbRecipe);
         _unitOfWork.Commit();
 
-        await _mediator.Publish(new DomainSuccessNotification("UpdateRecipe", "Recipe updated successfully"), cancellationToken);
+        await _mediator.Publish(new DomainSuccessNotification("UpdateRecipe", "Receita atualizada com sucesso!"), cancellationToken);
 
         var response = new UpdateRecipeCommandResponse
         {

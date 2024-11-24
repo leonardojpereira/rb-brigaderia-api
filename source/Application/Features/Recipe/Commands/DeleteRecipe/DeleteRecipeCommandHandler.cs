@@ -23,14 +23,14 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, D
 
         if (recipe is null)
         {
-            await _mediator.Publish(new DomainNotification("DeleteRecipe", "recipe not found"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("DeleteRecipe", "Receita não encontrada"), cancellationToken);
             return default;
         }
 
         _RecipeRepository.DeleteSoft(recipe);
         _unitOfWork.Commit();
 
-        await _mediator.Publish(new DomainSuccessNotification("DeleteRecipe", "recipe marked as deleted successfully"), cancellationToken);
+        await _mediator.Publish(new DomainSuccessNotification("DeleteRecipe", "Receita deletada com sucesso."), cancellationToken);
         return new DeleteRecipeCommandResponse();
     }
 }

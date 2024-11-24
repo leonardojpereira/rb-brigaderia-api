@@ -23,14 +23,14 @@ public class DeleteProductionCommandHandler : IRequestHandler<DeleteProductionCo
 
         if (Production is null)
         {
-            await _mediator.Publish(new DomainNotification("DeleteProduction", "Production not found"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("DeleteProduction", "Produção não encontrada"), cancellationToken);
             return default;
         }
 
         _ProductionRepository.Delete(Production);
         _unitOfWork.Commit();
 
-        await _mediator.Publish(new DomainSuccessNotification("DeleteProduction", "Production deleted successfully"), cancellationToken);
+        await _mediator.Publish(new DomainSuccessNotification("DeleteProduction", "Produção deletada com sucesso"), cancellationToken);
         var response = new DeleteProductionCommandResponse {};
         return response;    
     }

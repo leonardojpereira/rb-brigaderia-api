@@ -7,6 +7,7 @@ using Project.Application.Features.Queries.GetAllVendasCaixinhas;
 using Project.Application.Features.Queries.GetVendasCaixinhasById;
 using Project.Application.Features.Commands.UpdateVendasCaixinhas;
 using Project.Application.Features.Commands.DeleteVendasCaixinhas;
+using Project.Application.Features.Queries.GetResumoVendasCaixinhas;
 
 namespace Project.WebApi.Controllers
 {
@@ -32,7 +33,7 @@ namespace Project.WebApi.Controllers
         [FromQuery] int pageSize = 7,
         [FromQuery] DateTime? date = null,
         [FromQuery] string nomeVendedor = "")
-        
+
         {
             var query = new GetAllVendasCaixinhasQuery(pageNumber, pageSize, date, nomeVendedor);
             return Response(await _mediatorHandler.Send(query));
@@ -62,6 +63,19 @@ namespace Project.WebApi.Controllers
         {
             return Response(await _mediatorHandler.Send(new DeleteVendasCaixinhasCommand(id)));
         }
+
+        [Authorize(Roles = "Admin, User")]
+        [HttpGet("Resume")]
+        [ProducesResponseType(typeof(GetResumoVendasCaixinhasQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetResumoVendasCaixinhas(
+        [FromQuery] string nomeVendedor = "",
+        [FromQuery] int? mes = null,
+        [FromQuery] int? ano = null)
+        {
+            var query = new GetResumoVendasCaixinhasQuery(nomeVendedor, mes, ano);
+            return Response(await _mediatorHandler.Send(query));
+        }
+
 
     }
 }

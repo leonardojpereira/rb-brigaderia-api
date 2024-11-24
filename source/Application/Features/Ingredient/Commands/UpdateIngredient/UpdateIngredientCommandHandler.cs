@@ -30,7 +30,7 @@ public class UpdateIngredientCommandHandler : IRequestHandler<UpdateIngredientCo
 
         if (dbIngredient is null)
         {
-            await _mediator.Publish(new DomainNotification("UpdateIngredient", "Ingredient not found"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("UpdateIngredient", "Produto não encontrado"), cancellationToken);
             return default;
         }
 
@@ -64,7 +64,7 @@ public class UpdateIngredientCommandHandler : IRequestHandler<UpdateIngredientCo
 
         _unitOfWork.Commit();
 
-        await _mediator.Publish(new DomainSuccessNotification("UpdateIngredient", "Ingredient updated successfully"), cancellationToken);
+        await _mediator.Publish(new DomainSuccessNotification("UpdateIngredient", "Produto atualizado com sucesso."), cancellationToken);
 
         var response = new UpdateIngredientCommandResponse
         {

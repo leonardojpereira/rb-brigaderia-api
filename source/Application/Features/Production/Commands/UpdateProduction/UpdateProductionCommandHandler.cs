@@ -32,7 +32,7 @@ namespace Project.Application.Features.Commands.UpdateProduction
             var production = await _productionRepository.GetAsync(p => p.Id == request.Id);
             if (production == null)
             {
-                await _mediator.Publish(new DomainNotification("UpdateProduction", "Production not found"), cancellationToken);
+                await _mediator.Publish(new DomainNotification("UpdateProduction", "Produção não encontrada."), cancellationToken);
                 return null;
             }
 
@@ -41,7 +41,7 @@ namespace Project.Application.Features.Commands.UpdateProduction
                 var recipe = await _recipeRepository.GetWithIngredientsAsync(request.Request.ReceitaId);
                 if (recipe == null)
                 {
-                    await _mediator.Publish(new DomainNotification("UpdateProduction", "Recipe not found"), cancellationToken);
+                    await _mediator.Publish(new DomainNotification("UpdateProduction", "Receita não encontrada."), cancellationToken);
                     return null;
                 }
 
@@ -53,7 +53,7 @@ namespace Project.Application.Features.Commands.UpdateProduction
             var recipeWithIngredients = await _recipeRepository.GetWithIngredientsAsync(production.ReceitaId);
             if (recipeWithIngredients == null)
             {
-                await _mediator.Publish(new DomainNotification("UpdateProduction", "Recipe ingredients not found"), cancellationToken);
+                await _mediator.Publish(new DomainNotification("UpdateProduction", "Receita não encontrada"), cancellationToken);
                 return null;
             }
 
@@ -70,7 +70,7 @@ namespace Project.Application.Features.Commands.UpdateProduction
 
                 if (ingrediente.Stock < quantidadeDescontada)
                 {
-                    await _mediator.Publish(new DomainNotification("UpdateProduction", $"Insufficient stock for ingredient {ingrediente.Name}"), cancellationToken);
+                    await _mediator.Publish(new DomainNotification("UpdateProduction", $"Estoque insuficiente para {ingrediente.Name}"), cancellationToken);
                     return null;
                 }
 
@@ -81,7 +81,7 @@ namespace Project.Application.Features.Commands.UpdateProduction
             _productionRepository.Update(production);
             _unitOfWork.Commit();
 
-            await _mediator.Publish(new DomainSuccessNotification("UpdateProduction", "Production updated successfully"), cancellationToken);
+            await _mediator.Publish(new DomainSuccessNotification("UpdateProduction", "Produção atualizada com sucesso."), cancellationToken);
 
             return new UpdateProductionCommandResponse
             {
