@@ -5,32 +5,26 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
     public RegisterUserCommandValidator()
     {
         RuleFor(x => x.Request)
-            .NotNull().WithMessage("{PropertyName} is required.")
+            .NotNull().WithMessage("{PropertyName} é obrigatório.")
             .DependentRules(() =>
             {
-                RuleFor(x => x.Request.Username)
-                    .NotEmpty().WithMessage("{PropertyName} is required.")
-                    .NotNull().WithMessage("{PropertyName} is required.")
-                    .Must(x => !x.Contains(' ')).WithMessage("{PropertyName} cannot contain spaces.");
-
                 RuleFor(x => x.Request.Password)
-                    .NotEmpty().WithMessage("{PropertyName} is required.")
-                    .NotNull().WithMessage("{PropertyName} is required.")
-                    .MinimumLength(8).WithMessage("{PropertyName} must be at least 8 characters long.")
-                    .Matches(@"[A-Z]").WithMessage("{PropertyName} must contain at least one uppercase character.")
-                    .Matches(@"[a-z]").WithMessage("{PropertyName} must contain at least one lowercase character.")
-                    .Matches(@"[0-9]").WithMessage("{PropertyName} must contain at least one number.")
-                    .Matches(@"[^a-zA-Z0-9]").WithMessage("{PropertyName} must contain at least one special character.");
+                    .NotEmpty().WithMessage("Senha é obrigatório.")
+                    .NotNull().WithMessage("Senha é obrigatório.")
+                    .MinimumLength(8).WithMessage("Senha deve ter no mínimo 8 caracteres.")
+                    .Matches(@"[A-Z]").WithMessage("Senha deve conter pelo menos uma letra maiúscula.")
+                    .Matches(@"[a-z]").WithMessage("Senha deve conter pelo menos uma letra minúscula.")
+                    .Matches(@"[0-9]").WithMessage("Senha deve conter pelo menos um número.")
+                    .Matches(@"[^a-zA-Z0-9]").WithMessage("Senha deve conter pelo menos um caractere especial.");
 
                 RuleFor(x => x.Request.Email)
-                    .NotEmpty().WithMessage("{PropertyName} is required.")
-                    .NotNull().WithMessage("{PropertyName} is required.")
-                    .EmailAddress().WithMessage("{PropertyName} is invalid.");
+                    .NotEmpty().WithMessage("E-mail é obrigatório.")
+                    .NotNull().WithMessage("E-mail é obrigatório.")
+                    .EmailAddress().WithMessage("E-mail é inválido.");
             });
 
         RuleFor(x => x.Request.RoleId)
-    .NotEmpty().WithMessage("RoleId is required.")
-    .NotNull().WithMessage("RoleId is required.");
-
+            .NotEmpty().WithMessage("Tipo de perfil é obrigatório.")
+            .NotNull().WithMessage("Tipo de perfil é obrigatório.");
     }
 }

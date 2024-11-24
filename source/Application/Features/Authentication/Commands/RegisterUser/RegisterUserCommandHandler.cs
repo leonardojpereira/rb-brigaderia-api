@@ -19,11 +19,11 @@ public async Task<RegisterUserCommandResponse?> Handle(RegisterUserCommand comma
     {
         if (existingUser.Username == command.Request.Username)
         {
-            await _mediator.Publish(new DomainNotification("RegisterUser", "Username already exists"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("RegisterUser", "Usuário já existe."), cancellationToken);
         }
         else
         {
-            await _mediator.Publish(new DomainNotification("RegisterUser", "Email already exists"), cancellationToken);
+            await _mediator.Publish(new DomainNotification("RegisterUser", "E-mail já existe."), cancellationToken);
         }
         return default;
     }
@@ -33,13 +33,13 @@ public async Task<RegisterUserCommandResponse?> Handle(RegisterUserCommand comma
         username: command.Request.Username,
         password: command.Request.Password,
         email: command.Request.Email,
-        roleId: command.Request.RoleId // Novo campo RoleId
+        roleId: command.Request.RoleId 
     );
 
     user = _userRepository.Add(user);
     _unitOfWork.Commit();
 
-    await _mediator.Publish(new DomainSuccessNotification("RegisterUser", "User registered successfully"), cancellationToken);
+    await _mediator.Publish(new DomainSuccessNotification("RegisterUser", "Usuário registrado com sucesso!"), cancellationToken);
 
     return new RegisterUserCommandResponse
     {
