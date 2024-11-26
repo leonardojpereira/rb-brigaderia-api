@@ -11,7 +11,7 @@ A API RB Brigaderia foi desenvolvida para atender às necessidades de gerenciame
 
 ## 🛠️ Feito com
 
-- <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg" alt="logo_visual_studio" width="30"/> **.NET 7**: Framework base para desenvolvimento da aplicação.
+- <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg" alt="logo_visual_studio" width="30"/> **.NET 8**: Framework base para desenvolvimento da aplicação.
 
 ---
 
