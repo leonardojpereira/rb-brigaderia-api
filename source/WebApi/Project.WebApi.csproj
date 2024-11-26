@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Project.WebApi</RootNamespace>
     <AssemblyName>Project.WebApi</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +27,7 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.1.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.0" /> 
   </ItemGroup>
 </Project>
