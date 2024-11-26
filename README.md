@@ -11,17 +11,17 @@ A API RB Brigaderia foi desenvolvida para atender às necessidades de gerenciame
 
 ## 🛠️ Feito com
 
-- ![logo_visual_studio](https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg) **.NET 7**: Framework base para desenvolvimento da aplicação.
+- <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg" alt="logo_visual_studio" width="30"/> **.NET 7**: Framework base para desenvolvimento da aplicação.
 
 ---
 
 ## 💻 Tecnologias Utilizadas
 
-- ![logo_dotnet](https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg) **ASP.NET Core**: Framework utilizado para criar APIs escaláveis e performáticas.
-- ![logo_sqlserver](https://raw.githubusercontent.com/devicons/devicon/master/icons/microsoftsqlserver/microsoftsqlserver-plain.svg) **Entity Framework Core**: ORM utilizado para gerenciar o acesso ao banco de dados.
+- <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg" alt="logo_dotnet" width="30"/> **ASP.NET Core**: Framework utilizado para criar APIs escaláveis e performáticas.
+- <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="logo_sqlserver" width="30"/> **Entity Framework Core**: ORM utilizado para gerenciar o acesso ao banco de dados.
 - **JWT (JSON Web Token)**: Sistema de autenticação seguro para controle de acessos.
 - **Swagger**: Ferramenta para documentação interativa da API.
-- ![logo_csharp](https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg) **C#**: Linguagem principal para desenvolvimento de lógica e operações.
+- <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="logo_csharp" width="30"/> **C#**: Linguagem principal para desenvolvimento de lógica e operações.
 
 ---
 
