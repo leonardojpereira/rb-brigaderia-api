@@ -4,6 +4,8 @@ using Project.WebApi.Configurations;
 using Project.Application.Services;
 using Project.Domain.Interfaces.Data.Repositories;
 using Project.Infrastructure.Data.Repositories;
+using System.IO;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddWebServices(builder.Configuration);
 builder.Services.AddScoped<IVendasCaixinhasMetricsService, VendasCaixinhasMetricsService>();
 builder.Services.AddScoped<IVendasCaixinhasRepository, VendasCaixinhasRepository>();
 
+// Configuração de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
@@ -31,6 +34,15 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter());
     });
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+     options.EnableAnnotations();
+    var xmlFile = $"{AppDomain.CurrentDomain.FriendlyName}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -43,7 +55,6 @@ else
 }
 
 app.UseHealthChecks("/health");
-
 app.UseHttpsRedirection();
 
 app.UseCors("AllowSpecificOrigin");
@@ -53,9 +64,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseSwaggerConfiguration();
+app.MapControllers();
 
 app.UseExceptionHandler(options => { });
 
