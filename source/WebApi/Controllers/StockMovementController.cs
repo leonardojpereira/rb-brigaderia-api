@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Project.Application.Features.Commands.UpdateStockMovement;
 using Project.Application.Features.Queries.GetAllStockMovement;
 using MediatR;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Project.WebApi.Controllers;
 
@@ -11,6 +12,7 @@ namespace Project.WebApi.Controllers;
 /// Controlador responsável pelo gerenciamento de movimentações de estoque.
 /// </summary>
 [ApiController]
+[SwaggerTag("Reúne endpoints para gerenciamento de movimentações de estoque, incluindo atualização e consulta.")]
 [Route("api/v1/[controller]")]
 public class StockMovementController : BaseController
 {

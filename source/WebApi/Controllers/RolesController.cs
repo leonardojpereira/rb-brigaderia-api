@@ -3,6 +3,7 @@ using Project.Application.Features.Queries.GetAllRoles;
 using Project.Domain.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Project.WebApi.Controllers;
 
@@ -11,6 +12,8 @@ namespace Project.WebApi.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
+[SwaggerTag("Reúne endpoints para gerenciamento de roles (perfis de usuário), incluindo consulta.")]
+
 [Authorize(Roles = "Admin, User")]
 public class RolesController : BaseController
 {

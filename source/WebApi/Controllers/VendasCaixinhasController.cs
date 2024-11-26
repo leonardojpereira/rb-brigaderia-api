@@ -8,6 +8,7 @@ using Project.Application.Features.Queries.GetVendasCaixinhasById;
 using Project.Application.Features.Commands.UpdateVendasCaixinhas;
 using Project.Application.Features.Commands.DeleteVendasCaixinhas;
 using Project.Application.Features.Queries.GetResumoVendasCaixinhas;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Project.WebApi.Controllers;
 
@@ -15,6 +16,7 @@ namespace Project.WebApi.Controllers;
 /// Controlador responsável pelo gerenciamento de vendas de caixinhas.
 /// </summary>
 [ApiController]
+[SwaggerTag("Reúne endpoints para gerenciamento de vendas de caixinhas, incluindo criação, consulta, edição e exclusão.")]
 [Route("api/v1/[controller]")]
 public class VendasCaixinhasController : BaseController
 {

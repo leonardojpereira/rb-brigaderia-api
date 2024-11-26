@@ -5,6 +5,7 @@ using Project.Application.Features.Queries.GetBestSellingDay;
 using Project.Application.Features.Queries.GetMonthWithMostSales;
 using Project.Application.Features.Queries.GetMaxProfitInADay;
 using Project.Application.Features.Queries.GetMonthlyVendasCaixinhas;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Project.WebApi.Controllers;
 
@@ -12,6 +13,7 @@ namespace Project.WebApi.Controllers;
 /// Controlador responsável por métricas das vendas de caixinhas.
 /// </summary>
 [ApiController]
+[SwaggerTag("Reúne endpoints para métricas das vendas de caixinhas, incluindo análise de vendas mensais e diárias.")]
 [Route("api/v1/[controller]")]
 public class VendasCaixinhasMetricsController : BaseController
 {
